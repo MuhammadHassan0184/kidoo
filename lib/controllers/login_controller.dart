@@ -1,0 +1,42 @@
+import 'package:flutter/material.dart';
+import 'package:kidoo/view/main_manue.dart';
+import '../services/auth_service.dart';
+
+class LoginController {
+  final AuthService _authService = AuthService();
+
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
+  Future<void> login(BuildContext context) async {
+    final email = emailController.text.trim();
+    final password = passwordController.text.trim();
+
+    if (email.isEmpty || password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please enter email and password")),
+      );
+      return;
+    }
+
+    try {
+      final userCredential = await _authService.login(email, password);
+
+      if (userCredential.user != null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Welcome back, ${userCredential.user!.email}!")),
+        );
+
+        // 👉 DIRECT NAVIGATION TO HOME SCREEN
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (_) => const MainManue()),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Login Error: $e")),
+      );
+    }
+  }
+}
