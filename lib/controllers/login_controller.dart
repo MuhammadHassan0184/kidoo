@@ -23,17 +23,20 @@ class LoginController {
       final userCredential = await _authService.login(email, password);
 
       if (userCredential.user != null) {
+        // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("Welcome back, ${userCredential.user!.email}!")),
         );
 
         // 👉 DIRECT NAVIGATION TO HOME SCREEN
         Navigator.pushReplacement(
+          // ignore: use_build_context_synchronously
           context,
           MaterialPageRoute(builder: (_) => const MainManue()),
         );
       }
     } catch (e) {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Login Error: $e")),
       );

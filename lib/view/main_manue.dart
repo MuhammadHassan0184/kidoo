@@ -12,7 +12,7 @@ class MainManue extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      // ignore: unused_local_variable
+      // ignore: unused_local_variable, no_leading_underscores_for_local_identifiers
       final AuthService _auth = AuthService();
 
     // Function to handle logout with confirmation
