@@ -1,5 +1,6 @@
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:kidoo/Config/routes/routes_name.dart';
+import 'package:kidoo/view/add_cor.dart';
 import 'package:kidoo/view/screens/login_screen.dart';
 import 'package:kidoo/view/all_categories.dart';
 import 'package:kidoo/view/alphabets.dart';
@@ -17,6 +18,7 @@ class AppRoutes {
     GetPage(name: AppRoutesName.signupScreen, page: () =>  SignupScreen()),
     GetPage(name: AppRoutesName.mainManue, page: () => const MainManue()),
     GetPage(name: AppRoutesName.stories, page: () => const Stories()),
+    GetPage(name: AppRoutesName.addCor, page: () => const AddCor()),
     GetPage(name: AppRoutesName.allCategories, page: () => const AllCategories()),
     GetPage(name: AppRoutesName.home, page: () => const Home()),
     GetPage(name: AppRoutesName.colortask, page: () => const Colortask()),

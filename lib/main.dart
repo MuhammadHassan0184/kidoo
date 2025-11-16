@@ -1,12 +1,12 @@
-import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
-import 'package:kidoo/Config/routes/routes.dart';
-import 'package:kidoo/view/main_manue.dart';
-import 'firebase_options.dart';
-import 'view/screens/login_screen.dart';
-import 'services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:kidoo/Config/routes/routes.dart';
+import 'package:kidoo/view/main_manue.dart'; 
+import 'view/screens/login_screen.dart';
+import 'package:flutter/material.dart';
+import 'services/auth_service.dart';
+import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +25,6 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Kidoo Firebase Auth',
       debugShowCheckedModeBanner: false,
-      
       home: StreamBuilder<User?>(
         stream: _auth.authStateChanges,
         builder: (context, snapshot) {

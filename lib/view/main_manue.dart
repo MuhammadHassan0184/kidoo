@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:get/utils.dart';
+import 'package:kidoo/view/screens/login_screen.dart';
+import 'package:kidoo/services/auth_service.dart';
+import 'package:kidoo/Widgets/lesson_list.dart';
 import 'package:kidoo/Config/app_colors.dart';
 import 'package:kidoo/Widgets/cards.dart';
-import 'package:kidoo/Widgets/lesson_list.dart';
-import 'package:kidoo/services/auth_service.dart';
-import 'package:kidoo/view/screens/login_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:get/utils.dart';
 
 class MainManue extends StatelessWidget {
   const MainManue({super.key});
@@ -21,7 +21,7 @@ class MainManue extends StatelessWidget {
       final shouldLogout = await showDialog<bool>(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text('Logout'),
+          title: const Text('Logout', style: TextStyle(fontWeight: FontWeight.bold),),
           content: const Text('Are you sure you want to logout?'),
           actions: [
             TextButton(
@@ -29,8 +29,11 @@ class MainManue extends StatelessWidget {
               child: const Text('Cancel'),
             ),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.frozi,
+              ),
               onPressed: () => Navigator.of(context).pop(true),
-              child: const Text('Logout'),
+              child: const Text('Logout', style: TextStyle(color: Colors.white),),
             ),
           ],
         ),
@@ -55,18 +58,28 @@ class MainManue extends StatelessWidget {
           children: [
             DrawerHeader(
               decoration: BoxDecoration(color: AppColors.frozi),
-              child: const Text("Menu", style: TextStyle(color: Colors.white, fontSize: 24)),
+              child: const Text("Menu", style: TextStyle(color: Colors.white, fontSize: 26,)),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: ListTile(
-                title: Text("Add Course", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
+            InkWell(
+              onTap: () {
+                Get.toNamed("/AddCor");
+              },
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                child: ListTile(
+                  title: Text("Add Course", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
+                ),
               ),
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: ListTile(
-                title: Text("Add Lesson", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
+            InkWell(
+              onTap: () {
+                
+              },
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 15),
+                child: ListTile(
+                  title: Text("Add Lesson", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
+                ),
               ),
             ),
             Padding(
@@ -85,7 +98,6 @@ class MainManue extends StatelessWidget {
 
       appBar: AppBar(
         backgroundColor: AppColors.bgColor,
-
         // 🔥 Only change: proper leading icon to open drawer
         leading: Builder(
           builder: (context) {
@@ -234,6 +246,12 @@ class MainManue extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Row(
                   children: [
+                    PlayCard(),
+                    SizedBox(width: 10),
+                    PlayCard(),
+                    SizedBox(width: 10),
+                    PlayCard(),
+                    SizedBox(width: 10),
                     PlayCard(),
                     SizedBox(width: 10),
                     PlayCard(),
