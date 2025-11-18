@@ -46,30 +46,74 @@ class SignupScreen extends StatelessWidget {
                       const SizedBox(height: 6),
                       Text("Sign up to get started"),
                       const SizedBox(height: 30),
-
                       TextFormField(
-                        controller: controller.emailController,
-                        decoration: InputDecoration(
-                          labelText: 'Email',
-                          prefixIcon: const Icon(Icons.email_rounded),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 18),
+  controller: controller.fullNameController,
+  decoration: InputDecoration(
+    labelText: 'Full Name',
+    prefixIcon: const Icon(Icons.person),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+    ),
+  ),
+),
+const SizedBox(height: 18),
 
-                      TextFormField(
-                        controller: controller.passwordController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          prefixIcon: const Icon(Icons.lock_rounded),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                      ),
+TextFormField(
+  controller: controller.countryController,
+  decoration: InputDecoration(
+    labelText: 'Country',
+    prefixIcon: const Icon(Icons.flag),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+    ),
+  ),
+),
+const SizedBox(height: 18),
+
+DropdownButtonFormField<String>(
+  // ignore: deprecated_member_use
+  value: controller.selectedRole,
+  decoration: InputDecoration(
+    labelText: "Select Role",
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+    ),
+  ),
+  items: const [
+    DropdownMenuItem(value: "admin", child: Text("Admin")),
+    DropdownMenuItem(value: "user", child: Text("User")),
+  ],
+  onChanged: (value) {
+    controller.selectedRole = value!;
+  },
+),
+const SizedBox(height: 18),
+TextFormField(
+  controller: controller.emailController,
+  decoration: InputDecoration(
+    labelText: 'Email',
+    prefixIcon: const Icon(Icons.email_rounded),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+    ),
+  ),
+),
+const SizedBox(height: 18),
+
+TextFormField(
+  controller: controller.passwordController,
+  obscureText: true,
+  decoration: InputDecoration(
+    labelText: 'Password',
+    prefixIcon: const Icon(Icons.lock_rounded),
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(12),
+    ),
+  ),
+),
+const SizedBox(height: 18),
+
+
                       const SizedBox(height: 24),
 
                       // FIX: call signup()

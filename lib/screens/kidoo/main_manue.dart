@@ -1,8 +1,8 @@
 import 'package:get/get_navigation/get_navigation.dart';
-import 'package:kidoo/view/screens/login_screen.dart';
+import 'package:kidoo/Widgets/drawer.dart';
 import 'package:kidoo/services/auth_service.dart';
 import 'package:kidoo/Widgets/lesson_list.dart';
-import 'package:kidoo/Config/app_colors.dart';
+import 'package:kidoo/Config/utils/app_colors.dart';
 import 'package:kidoo/Widgets/cards.dart';
 import 'package:flutter/material.dart';
 import 'package:get/utils.dart';
@@ -17,84 +17,10 @@ class MainManue extends StatelessWidget {
 
     // Function to handle logout with confirmation
     // ignore: no_leading_underscores_for_local_identifiers, unused_element
-    Future<void> _logout() async {
-      final shouldLogout = await showDialog<bool>(
-        context: context,
-        builder: (context) => AlertDialog(
-          title: const Text('Logout', style: TextStyle(fontWeight: FontWeight.bold),),
-          content: const Text('Are you sure you want to logout?'),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(false),
-              child: const Text('Cancel'),
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.frozi,
-              ),
-              onPressed: () => Navigator.of(context).pop(true),
-              child: const Text('Logout', style: TextStyle(color: Colors.white),),
-            ),
-          ],
-        ),
-      );
 
-      if (shouldLogout == true) {
-        // await _auth.signOut();
-        if (context.mounted) {
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (_) =>  LoginScreen()),
-          );
-        }
-      }
-    }
-    
     return Scaffold(
       backgroundColor: AppColors.black,
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(color: AppColors.frozi),
-              child: const Text("Menu", style: TextStyle(color: Colors.white, fontSize: 26,)),
-            ),
-            InkWell(
-              onTap: () {
-                Get.toNamed("/AddCor");
-              },
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15),
-                child: ListTile(
-                  title: Text("Add Course", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                
-              },
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 15),
-                child: ListTile(
-                  title: Text("Add Lesson", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),),
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
-              child: ListTile(
-                title: const Text("Log Out", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red, fontSize: 18),),
-                trailing: IconButton(
-            icon: const Icon(Icons.logout),
-            onPressed: _logout,
-          ),
-              ),
-            ),
-          ],
-        ),
-      ),
+      drawer: CustomDrawer(), 
 
       appBar: AppBar(
         backgroundColor: AppColors.bgColor,
@@ -164,7 +90,7 @@ class MainManue extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    "Categories",
+                    "Courses",
                     style: TextStyle(
                         color: AppColors.twhite,
                         fontSize: 22,
@@ -186,7 +112,7 @@ class MainManue extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(height: 15),
+            // 
             Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: LayoutBuilder(
@@ -213,7 +139,7 @@ class MainManue extends StatelessWidget {
           },
         ),
       ),
-            SizedBox(height: 20),
+            // 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 15),
               child: Row(

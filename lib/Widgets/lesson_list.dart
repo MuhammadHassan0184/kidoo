@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kidoo/Config/app_colors.dart';
+import 'package:kidoo/Config/utils/app_colors.dart';
 
 
 // ignore: must_be_immutable
@@ -46,7 +46,7 @@ class LessonList extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Lesson Title",
+                    "Courses Title",
                     style: TextStyle(
                       color: AppColors.twhite,
                       fontSize: 13,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kidoo/Config/app_colors.dart';
+import 'package:kidoo/Config/utils/app_colors.dart';
 import 'package:kidoo/Widgets/banner_card.dart';
 import 'package:kidoo/Widgets/home_card.dart';
 
@@ -14,7 +14,7 @@ class Vegitable extends StatelessWidget {
       backgroundColor: AppColors.black,
       appBar: AppBar(
       backgroundColor: AppColors.bgColor,
-      leading: IconButton(onPressed: (){Get.offNamed("/Home");}, icon: Icon(Icons.arrow_back, color: AppColors.twhite,),),
+      leading: IconButton(onPressed: (){Get.offNamed("/AllCategories");}, icon: Icon(Icons.arrow_back, color: AppColors.twhite,),),
         title: Text("Vegitables", style: TextStyle(color: AppColors.twhite, fontWeight: FontWeight.bold,), ), centerTitle: true,
       ),
       body: Padding(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kidoo/view/main_manue.dart';
+import 'package:kidoo/screens/kidoo/main_manue.dart';
 import '../services/auth_service.dart';
 
 class LoginController {
@@ -43,3 +43,5 @@ class LoginController {
     }
   }
 }
+
+

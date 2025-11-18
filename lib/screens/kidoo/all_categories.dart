@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kidoo/Config/app_colors.dart';
+import 'package:kidoo/Config/utils/app_colors.dart';
 import 'package:kidoo/Widgets/home_card.dart';
 
-class Home extends StatelessWidget {
-  const Home({super.key});
+class AllCategories extends StatelessWidget {
+  const AllCategories({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,9 +12,24 @@ class Home extends StatelessWidget {
       backgroundColor: AppColors.black,
       appBar: AppBar(
         backgroundColor: AppColors.bgColor,
-        title: Text("Home", style: TextStyle(color: AppColors.twhite, fontWeight: FontWeight.bold,), ), centerTitle: true,
+        leading: IconButton(
+          onPressed: () {
+            Get.offNamed("/MainManue");
+          },
+          icon: Icon(Icons.arrow_back, color: AppColors.twhite),
+        ),
+        title: Text(
+          "All Courses",
+          style: TextStyle(
+            color: AppColors.twhite,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
       ),
-      body: Padding(
+      // ------------------ BODY ------------------
+      body: 
+      Padding(
         padding: const EdgeInsets.all(15),
         child: GridView(
           gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -40,8 +55,6 @@ class Home extends StatelessWidget {
           ],
         ),
       ),
-      
     );
   }
 }
-

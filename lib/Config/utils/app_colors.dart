@@ -32,4 +32,8 @@ class AppColors {
   static final Color violet= Color(0xFF70369d);
   static final Color pink= Color(0xFFF527C8);
   static final Color skin= Color(0xFFFFE4C4);
+
+  // button
+  static final Color zink= Color(0xFF00C3D0);
+
 }

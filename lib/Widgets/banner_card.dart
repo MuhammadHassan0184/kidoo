@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:kidoo/Config/app_colors.dart';
+import 'package:kidoo/Config/utils/app_colors.dart';
 
 // ignore: must_be_immutable
 class BannerCard extends StatelessWidget {

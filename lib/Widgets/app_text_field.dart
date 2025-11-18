@@ -1,16 +1,16 @@
 
 import 'package:flutter/material.dart';
-import 'package:kidoo/Config/app_colors.dart';
+import 'package:kidoo/Config/utils/app_colors.dart';
 
 // ignore: must_be_immutable
 class AppTextField extends StatelessWidget {
   String label;
   IconData? icon;
-  TextEditingController controller;
+  // TextEditingController controller;
    final String? Function(String?)? validator;
    AppTextField({super.key, 
    required this.label,  
-   required this.controller,
+  //  required this.controller,
    this.icon,
    this.validator,
    });
@@ -18,15 +18,16 @@ class AppTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      controller: controller,
+      // controller: controller,
       validator: validator,
       style: TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.w500,
+        color: AppColors.twhite
       ),
           decoration: InputDecoration(
             prefixIcon: icon == null ? null : Icon(icon),
-            hint: Text(label, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
+            hint: Text(label, style: TextStyle(fontSize: 18, fontWeight: FontWeight.w500, color: AppColors.info),),
     enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(10),
       borderSide: BorderSide(
@@ -36,7 +37,7 @@ class AppTextField extends StatelessWidget {
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(10),
       borderSide: BorderSide(
-        color: AppColors.secondary, 
+        color: AppColors.primary, 
       ),
     ),
           ),
