@@ -1,18 +1,17 @@
-import 'package:kidoo/screens/menu/add_course_letter.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:kidoo/Config/utils/app_colors.dart';
 import 'package:kidoo/Widgets/app_text_field.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:flutter/material.dart';
 
-class AddCourses extends StatefulWidget {
-  const AddCourses({super.key});
+class AddLesson extends StatefulWidget {
+  const AddLesson({super.key});
 
   @override
-  State<AddCourses> createState() => _AddCoursesState();
+  State<AddLesson> createState() => _AddCoursesState();
 }
 
-class _AddCoursesState extends State<AddCourses>
+class _AddCoursesState extends State<AddLesson>
     with SingleTickerProviderStateMixin {
   late TabController controller;
 
@@ -30,7 +29,7 @@ class _AddCoursesState extends State<AddCourses>
         backgroundColor: AppColors.bgColor,
         leading: IconButton( onPressed: () { Get.offNamed("/MainManue"); }, icon: Icon(Icons.arrow_back, color: AppColors.twhite), ),
         title: const Text(
-          "Add Course",
+          "Add Lesson",
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
@@ -62,9 +61,7 @@ class _AddCoursesState extends State<AddCourses>
             child: TabBarView(
               controller: controller,
               children: [
-                AddCourseNone(),
-                AddCourseLetter(),
-                // AddCourseImage(),
+                AddLessonNone(),
               ],
             ),
           )
@@ -74,8 +71,8 @@ class _AddCoursesState extends State<AddCourses>
   }
 }
 
-class AddCourseNone extends StatelessWidget {
-  const AddCourseNone({super.key});
+class AddLessonNone extends StatelessWidget {
+  const AddLessonNone({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -85,14 +82,20 @@ class AddCourseNone extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(height: 20),
-          Text("Title",
+          Text("Select Course",
               style: TextStyle(color: AppColors.info, fontSize: 19)),
           const SizedBox(height: 10),
           AppTextField(label: "Here"),
 
           SizedBox(height: 20),
 
-          Text("Color Theme",
+          Text("Lesson Title",
+              style: TextStyle(color: AppColors.info, fontSize: 19)),
+          const SizedBox(height: 10),
+          AppTextField(label: "Here"),
+          SizedBox(height: 20),
+
+          Text("Lesson Theme",
               style: TextStyle(color: AppColors.info, fontSize: 19)),
           const SizedBox(height: 10),
           AppTextField(label: "Here"),

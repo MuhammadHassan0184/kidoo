@@ -11,6 +11,7 @@ import 'package:kidoo/screens/kidoo/stories.dart';
 import 'package:kidoo/screens/courses/vegitable.dart';
 import 'package:kidoo/screens/menu/add_course_letter.dart';
 import 'package:kidoo/screens/menu/add_courses.dart';
+import 'package:kidoo/screens/menu/add_lesson.dart';
 
 class AppRoutes {
   static routes() => [
@@ -19,6 +20,7 @@ class AppRoutes {
     GetPage(name: AppRoutesName.mainManue, page: () => const MainManue()),
     GetPage(name: AppRoutesName.addCourses, page: () => const AddCourses()),
     GetPage(name: AppRoutesName.addCourseLetter, page: () => const AddCourseLetter()),
+    GetPage(name: AppRoutesName.addLesson, page: () => const AddLesson()),
     GetPage(name: AppRoutesName.stories, page: () => const Stories()),
     GetPage(name: AppRoutesName.allCategories, page: () => const AllCategories()),
     GetPage(name: AppRoutesName.colortask, page: () => const Colortask()),

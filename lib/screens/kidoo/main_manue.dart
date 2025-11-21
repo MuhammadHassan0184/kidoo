@@ -153,7 +153,9 @@ class MainManue extends StatelessWidget {
                   ),
                   Spacer(),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.toNamed("/Stories");
+                    },
                     child: Text(
                       "See All",
                       style: TextStyle(

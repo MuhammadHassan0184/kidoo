@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kidoo/Config/utils/app_colors.dart';
 import 'package:kidoo/screens/auth/login_screen.dart';
+import 'package:kidoo/services/auth_service.dart';
 import 'package:kidoo/services/user_controller.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -9,35 +10,42 @@ class CustomDrawer extends StatelessWidget {
 
   final userController = Get.find<UserController>(); // ⬅ GET USER ROLE
 
-  Future<void> _logout(BuildContext context) async {
-    final shouldLogout = await showDialog<bool>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('Logout', style: TextStyle(fontWeight: FontWeight.bold)),
-        content: const Text('Are you sure you want to logout?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: const Text('Cancel'),
+Future<void> _logout(BuildContext context) async {
+  final shouldLogout = await showDialog<bool>(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text('Logout', style: TextStyle(fontWeight: FontWeight.bold)),
+      content: const Text('Are you sure you want to logout?'),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(false),
+          child: const Text('Cancel'),
+        ),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: AppColors.zink
           ),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(backgroundColor: AppColors.frozi),
-            onPressed: () => Navigator.of(context).pop(true),
-            child: const Text('Logout', style: TextStyle(color: Colors.white)),
-          ),
-        ],
-      ),
-    );
+          onPressed: () => Navigator.of(context).pop(true),
+          child: const Text('Logout', style: TextStyle(color: Colors.white),),
+        ),
+      ],
+    ),
+  );
 
-    if (shouldLogout == true) {
-      if (context.mounted) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (_) =>  LoginScreen()),
-        );
-      }
+  if (shouldLogout == true) {
+    // 🔥 LOGOUT FROM FIREBASE
+    await AuthService().logout();
+
+    // 🔥 Redirect — but GetX will handle automatically if using AuthGate
+    if (context.mounted) {
+      Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (_) => LoginScreen()),
+        (route) => false,
+      );
     }
   }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +64,6 @@ class CustomDrawer extends StatelessWidget {
           // ============================
 
           if (userController.role.value == "admin") ...[
-
 
             InkWell(
               onTap: () => Get.toNamed("/AddCourses"),

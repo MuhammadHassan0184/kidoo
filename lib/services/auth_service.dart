@@ -63,14 +63,17 @@
 //   }
 // }
 
+import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:kidoo/services/user_controller.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _db = FirebaseFirestore.instance;
 
-  // FIXED
+  final UserController userController = Get.find<UserController>();
+
   Stream<User?> get authStateChanges => _auth.authStateChanges();
 
   // SIGNUP
@@ -82,10 +85,8 @@ class AuthService {
     String role,
   ) async {
     try {
-      UserCredential result = await _auth.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+      UserCredential result =
+          await _auth.createUserWithEmailAndPassword(email: email, password: password);
 
       User? user = result.user;
 
@@ -98,6 +99,15 @@ class AuthService {
           "role": role,
           "createdAt": DateTime.now(),
         });
+
+        /// Update UserController
+        userController.setUser(
+          uid: user.uid,
+          fullName: fullName,
+          email: email,
+          country: country,
+          role: role,
+        );
 
         print("✅ User saved in Firestore: ${user.uid}");
       }
@@ -114,27 +124,40 @@ class AuthService {
     try {
       print("🔹 Logging in: $email");
 
-      return await _auth.signInWithEmailAndPassword(
+      UserCredential result = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-    } on FirebaseAuthException catch (e) {
-      print("❌ Firebase Login Error: ${e.code}");
 
-      if (e.code == 'user-not-found') {
-        throw "Account does not exist.";
-      } else if (e.code == 'wrong-password') {
-        throw "Incorrect password.";
+      /// fetch user role + profile
+      DocumentSnapshot snapshot =
+          await _db.collection("users").doc(result.user!.uid).get();
+
+      if (snapshot.exists) {
+        userController.setUser(
+          uid: result.user!.uid,
+          fullName: snapshot["fullName"],
+          email: snapshot["email"],
+          country: snapshot["country"],
+          role: snapshot["role"],
+        );
       }
 
-      throw e.message ?? "Login failed";
+      return result;
+    } catch (e) {
+      print("❌ Login Error: $e");
+      rethrow;
     }
   }
 
   // LOGOUT
-  Future<void> logout() async {
-    await _auth.signOut();
-  }
+Future<void> logout() async {
+  print("🔹 Logging out user...");
+
+  await _auth.signOut();
+
+  userController.clearUser();
+
+  print("✅ User logged out & UserController cleared");
 }
-
-
+}

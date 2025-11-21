@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kidoo/Config/routes/routes_name.dart';
 import 'package:kidoo/controllers/login_controller.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -96,7 +97,7 @@ class LoginScreen extends StatelessWidget {
 
                       Center(
                         child: TextButton(
-                          onPressed: () => Get.toNamed("/SignupScreen"),
+                          onPressed: () => Get.toNamed(AppRoutesName.signupScreen),
                           child: const Text("Don’t have an account? Sign Up"),
                         ),
                       ),
