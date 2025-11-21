@@ -1,4 +1,5 @@
 class AppRoutesName {
+  static const String authgate = "/";
   static const String loginScreen = "/LoginScreen";
   static const String signupScreen = "/SignupScreen";
   static const String mainManue= "/MainManue";

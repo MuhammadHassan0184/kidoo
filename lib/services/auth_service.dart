@@ -63,10 +63,10 @@
 //   }
 // }
 
-import 'package:get/get.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kidoo/services/user_controller.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:get/get.dart';
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -109,11 +109,13 @@ class AuthService {
           role: role,
         );
 
+        // ignore: avoid_print
         print("✅ User saved in Firestore: ${user.uid}");
       }
 
       return user;
     } catch (e) {
+      // ignore: avoid_print
       print("❌ Error: $e");
       return null;
     }
@@ -122,6 +124,7 @@ class AuthService {
   // LOGIN
   Future<UserCredential> login(String email, String password) async {
     try {
+      // ignore: avoid_print
       print("🔹 Logging in: $email");
 
       UserCredential result = await _auth.signInWithEmailAndPassword(
@@ -145,6 +148,7 @@ class AuthService {
 
       return result;
     } catch (e) {
+      // ignore: avoid_print
       print("❌ Login Error: $e");
       rethrow;
     }
@@ -152,12 +156,14 @@ class AuthService {
 
   // LOGOUT
 Future<void> logout() async {
+  // ignore: avoid_print
   print("🔹 Logging out user...");
 
   await _auth.signOut();
 
   userController.clearUser();
 
+  // ignore: avoid_print
   print("✅ User logged out & UserController cleared");
 }
 }

@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:kidoo/screens/kidoo/main_manue.dart';
 import 'package:kidoo/services/user_controller.dart';
-import '../services/auth_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import '../services/auth_service.dart';
 import 'package:get/get.dart';
 
 class SignupController {

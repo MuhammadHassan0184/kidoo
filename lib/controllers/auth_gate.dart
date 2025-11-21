@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import '../screens/auth/login_screen.dart';
+import '../services/user_controller.dart';
+import '../screens/kidoo/main_manue.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../services/user_controller.dart';
-import '../screens/auth/login_screen.dart';
-import '../screens/kidoo/main_manue.dart';
 
 class AuthGate extends StatelessWidget {
   AuthGate({super.key});

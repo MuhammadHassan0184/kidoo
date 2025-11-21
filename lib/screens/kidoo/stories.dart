@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:kidoo/Config/utils/app_colors.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:kidoo/Widgets/cards.dart';
+import 'package:flutter/material.dart';
 
 class Stories extends StatelessWidget {
   const Stories({super.key});

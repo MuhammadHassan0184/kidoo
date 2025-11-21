@@ -1,7 +1,7 @@
+import 'package:kidoo/controllers/login_controller.dart';
+import 'package:kidoo/Config/routes/routes_name.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kidoo/Config/routes/routes_name.dart';
-import 'package:kidoo/controllers/login_controller.dart';
 
 class LoginScreen extends StatelessWidget {
   final LoginController controller = LoginController();

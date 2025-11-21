@@ -41,6 +41,7 @@ class UserController extends GetxController {
         );
       }
     } catch (e) {
+      // ignore: avoid_print
       print("❌ Error loading user: $e");
     }
   }

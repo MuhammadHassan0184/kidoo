@@ -1,8 +1,9 @@
+import 'package:kidoo/Config/routes/routes_name.dart';
+import 'package:kidoo/services/user_controller.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:kidoo/Config/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:kidoo/controllers/auth_gate.dart';
-import 'package:kidoo/services/user_controller.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -33,7 +34,9 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.blue),
 
       /// 👇 AuthGate decides where to go
-      home: AuthGate(),
+      // home: AuthGate(),
+      getPages: AppRoutes.routes(),
+      initialRoute: AppRoutesName.authgate,
     );
   }
 }
