@@ -111,7 +111,7 @@ class AllCategories extends StatelessWidget {
             }
 
             return GridView.builder(
-              itemCount: data.length,
+              itemCount: 4,
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 250,
                 mainAxisSpacing: 16,

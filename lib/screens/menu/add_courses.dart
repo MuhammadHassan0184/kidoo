@@ -236,7 +236,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kidoo/Config/utils/app_colors.dart';
 import 'package:kidoo/Widgets/app_text_field.dart';
-import 'package:kidoo/screens/kidoo/all_categories.dart';
 import 'package:kidoo/screens/menu/add_course_letter.dart';
 
 class AddCourses extends StatefulWidget {
@@ -363,6 +362,7 @@ class _AddCourseNoneState extends State<AddCourseNone> {
 
       await docRef.update({"courseId": docRef.id});
 
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Course Added Successfully")),
       );
@@ -375,6 +375,7 @@ class _AddCourseNoneState extends State<AddCourseNone> {
       });
 
     } catch (e) {
+      // ignore: use_build_context_synchronously
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("Error: $e")));
     }

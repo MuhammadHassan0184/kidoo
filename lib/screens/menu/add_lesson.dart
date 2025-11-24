@@ -84,8 +84,28 @@ class AddLessonNone extends StatelessWidget {
           SizedBox(height: 20),
           Text("Select Course",
               style: TextStyle(color: AppColors.info, fontSize: 19)),
-          const SizedBox(height: 10),
-          AppTextField(label: "Here"),
+           SizedBox(height: 10),
+          // AppTextField(label: "Here"),
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+              color: AppColors.primary
+            ),
+            borderRadius: BorderRadius.circular(10)
+            ),
+            
+            child: ExpansionTile(
+              title:
+                Text("Here", style: TextStyle(color: AppColors.twhite, fontWeight: FontWeight.w500),),
+              children: [
+                TextButton(onPressed: (){}, child: Text("vegetables", style: TextStyle(color: AppColors.twhite),),),
+                TextButton(onPressed: (){}, child: Text("alphabets", style: TextStyle(color: AppColors.twhite),),),
+                TextButton(onPressed: (){}, child: Text("colors", style: TextStyle(color: AppColors.twhite,),),),
+                TextButton(onPressed: (){}, child: Text("fruits", style: TextStyle(color: AppColors.twhite),),),
+                
+              ],
+              ),
+          ),
 
           SizedBox(height: 20),
 
