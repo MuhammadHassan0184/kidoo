@@ -128,8 +128,8 @@ class MainManue extends StatelessWidget {
               itemCount: 6, 
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: crossAxisCount,
-                crossAxisSpacing: 16,
-                mainAxisSpacing: 16,
+                crossAxisSpacing: 13,
+                mainAxisSpacing: 13,
                 childAspectRatio: width > 600 ? 3.2 : 2.6, 
               ),
               itemBuilder: (context, index) {
