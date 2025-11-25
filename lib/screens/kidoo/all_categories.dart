@@ -187,16 +187,8 @@ Color hexToColor(String code) {
       return Color(int.parse("FF$r$g$b", radix: 16));
     }
 
-    return Colors.grey;
+    return const Color(0xFF676767);
   } catch (e) {
-    return Colors.grey;
+    return const Color(0xFF676767);
   }
 }
-
-
-
-
-// Color _hexToColor(String code) {
-//   return Color(int.parse(code.substring(1, 7), radix: 16) + 0xFF000000);
-// }
-
