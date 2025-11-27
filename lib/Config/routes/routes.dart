@@ -25,11 +25,11 @@ class AppRoutes {
     GetPage(name: AppRoutesName.addCourseLetter, page: () => const AddCourseLetter()),
     GetPage(name: AppRoutesName.addLesson, page: () => const AddLesson()),
     GetPage(name: AppRoutesName.stories, page: () => const Stories()),
-    GetPage(name: AppRoutesName.allCategories, page: () => const AllCategories()),
-    GetPage(name: AppRoutesName.colortask, page: () => const Colortask()),
-    GetPage(name: AppRoutesName.alphabets, page: () => const Alphabets()),
+    GetPage(name: AppRoutesName.allCategories, page: () => AllCategories()),
+    GetPage(name: AppRoutesName.colortask, page: () =>  Colortask()),
+    GetPage(name: AppRoutesName.alphabets, page: () => Alphabets()),
     GetPage(name: AppRoutesName.fruits, page: () => const Fruits()),
     GetPage(name: AppRoutesName.vegitable, page: () => const Vegitable()),
-    GetPage(name: AppRoutesName.otherCourses, page: () => const OtherCourses()),
+    GetPage(name: AppRoutesName.otherCourses, page: () => OtherCourses()),
   ];
 }

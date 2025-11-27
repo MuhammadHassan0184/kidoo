@@ -92,18 +92,20 @@ class _AddLessonNoneState extends State<AddLessonNone> {
   // ✔ Updated course names
   final List<String> courses = [
     "colors",
+    "alphabets",
     "fruits",
     "vegetables",
-    "alphabets",
+    "otherCourses",
   ];
 
   // ✔ Updated screen routes
  // ✔ Updated screen routes
 final Map<String, String> courseRoutes = {
   "colors": AppRoutesName.colortask,
+  "alphabets": AppRoutesName.alphabets,
   "fruits": AppRoutesName.fruits,
   "vegetables": AppRoutesName.vegitable,
-  "alphabets": AppRoutesName.alphabets,
+  "otherCourses": AppRoutesName.otherCourses,
 };
 
 

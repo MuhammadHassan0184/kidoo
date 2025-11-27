@@ -1,4 +1,4 @@
-import 'package:kidoo/screens/courses/other_courses.dart';
+import 'package:kidoo/Config/routes/routes_name.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kidoo/Config/utils/app_colors.dart';
 import 'package:kidoo/Widgets/home_card.dart';
@@ -200,7 +200,9 @@ class AllCategories extends StatelessWidget {
                           break;
 
                         default:
-                          Get.to(() => const OtherCourses());
+                          // Get.to(() => const OtherCourses());
+                          Get.toNamed("${AppRoutesName.otherCourses}?id=${course.id}&title=${course["title"]}");
+
                       }
                     },
                   ),
