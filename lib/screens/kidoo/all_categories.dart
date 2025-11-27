@@ -1,68 +1,9 @@
-// import 'package:kidoo/Config/utils/app_colors.dart';
-// import 'package:kidoo/Widgets/home_card.dart';
-// import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
-
-// class AllCategories extends StatelessWidget {
-//   const AllCategories({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: AppColors.black,
-//       appBar: AppBar(
-//         backgroundColor: AppColors.bgColor,
-//         leading: IconButton(
-//           onPressed: () {
-//             Get.offNamed("/MainManue");
-//           },
-//           icon: Icon(Icons.arrow_back, color: AppColors.twhite),
-//         ),
-//         title: Text(
-//           "All Courses",
-//           style: TextStyle(
-//             color: AppColors.twhite,
-//             fontWeight: FontWeight.bold,
-//           ),
-//         ),
-//         centerTitle: true,
-//       ),
-//       // ------------------ BODY ------------------
-//       body: 
-//       Padding(
-//         padding: const EdgeInsets.all(15),
-//         child: GridView(
-//           gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-//             maxCrossAxisExtent: 250,
-//             mainAxisSpacing: 16,
-//             crossAxisSpacing: 16,
-//             childAspectRatio: 1, 
-//           ),
-//           children:  [
-            // HomeCard(label: "Colors", color: AppColors.colors, onPressed: () {
-            //   Get.toNamed("/Colortask");
-            // },),
-            // HomeCard(label: "A_B_C", color: AppColors.abc, onPressed: () {
-            //   Get.toNamed("/Alphabets");
-            // },),
-            // HomeCardimg(label: "Fruits", color: AppColors.fruits, img: "assets/fruits.jpg", onPressed: () {
-            //   Get.toNamed("/Fruits");
-            // },),
-            // HomeCardimg(label: "Vegetables", color: AppColors.vegetable, img: "assets/veges.jpg", onPressed: () {
-            //   Get.toNamed("/Vegitable");
-//             },),
-            
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
+import 'package:kidoo/screens/courses/other_courses.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:kidoo/Config/utils/app_colors.dart';
 import 'package:kidoo/Widgets/home_card.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class AllCategories extends StatelessWidget {
   const AllCategories({super.key});
@@ -111,7 +52,7 @@ class AllCategories extends StatelessWidget {
             }
 
             return GridView.builder(
-              itemCount: 4,
+              itemCount: data.length,
               gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 250,
                 mainAxisSpacing: 16,
@@ -124,39 +65,145 @@ class AllCategories extends StatelessWidget {
                 String title = course["title"];
                 String hex = course["themeColor"];
 
-                return HomeCard(
-                  label: title,
-                  color: hexToColor(hex),
-                  onPressed: () {
-                    // -----------------------------------------------------
-                    // 📌 Navigation Control (ONLY 4 titles allowed)
-                    // -----------------------------------------------------
-                    switch (title) {
-                      case "colors":
-                        Get.toNamed("/Colortask");
-                        break;
+                return GestureDetector(
+                  onLongPress: () {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        title: Text(
+                          "Course Options",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        content: Text("What do you want to do with '$title'?"),
+                        actions: [
+                          // ===== EDIT BUTTON =====
+                          TextButton(
+                            onPressed: () {
+                              Navigator.pop(context);
 
-                      case "fruits":
-                        Get.toNamed("/Fruits");
-                        break;
+                              TextEditingController editController =
+                                  TextEditingController(text: title);
 
-                      case "alphabets":
-                        Get.toNamed("/Alphabets");
-                        break;
+                              // Show edit dialog
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: Text(
+                                    "Edit Course Name",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  content: TextField(
+                                    controller: editController,
+                                    decoration: InputDecoration(
+                                      hintText: "Enter new course title",
+                                    ),
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () => Navigator.pop(context),
+                                      child: Text("Cancel"),
+                                    ),
+                                    TextButton(
+                                      onPressed: () async {
+                                        String newTitle = editController.text
+                                            .trim();
 
-                      case "vegetables":
-                        Get.toNamed("/Vegitable");
-                        break;
+                                        if (newTitle.isNotEmpty) {
+                                          await FirebaseFirestore.instance
+                                              .collection("courses")
+                                              .doc(course.id)
+                                              .update({"title": newTitle});
 
-                      default:
-                        Get.snackbar(
-                          "Not Found",
-                          "This course does not exist in the app",
-                          backgroundColor: Colors.red,
-                          colorText: Colors.white,
-                        );
-                    }
+                                          // ignore: use_build_context_synchronously
+                                          Navigator.pop(context);
+
+                                          Get.snackbar(
+                                            "Updated",
+                                            "Course name updated!",
+                                            backgroundColor: Colors.green,
+                                            colorText: Colors.white,
+                                          );
+                                        }
+                                      },
+                                      child: Text(
+                                        "Save",
+                                        style: TextStyle(
+                                          color: AppColors.blue,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                            child: Text(
+                              "Edit",
+                              style: TextStyle(color: Colors.blue),
+                            ),
+                          ),
+
+                          // ===== DELETE BUTTON =====
+                          TextButton(
+                            onPressed: () async {
+                              await FirebaseFirestore.instance
+                                  .collection("courses")
+                                  .doc(course.id)
+                                  .delete();
+
+                              // ignore: use_build_context_synchronously
+                              Navigator.pop(context);
+
+                              Get.snackbar(
+                                "Deleted",
+                                "'$title' removed successfully",
+                                backgroundColor: Colors.red,
+                                colorText: Colors.white,
+                              );
+                            },
+                            child: Text(
+                              "Delete",
+                              style: TextStyle(color: Colors.red),
+                            ),
+                          ),
+
+                          TextButton(
+                            onPressed: () => Navigator.pop(context),
+                            child: const Text("Cancel"),
+                          ),
+                        ],
+                      ),
+                    );
                   },
+
+                  child: HomeCard(
+                    label: title,
+                    color: hexToColor(hex),
+                    onPressed: () {
+                      switch (title) {
+                        case "colors":
+                          Get.toNamed("/Colortask");
+                          break;
+
+                        case "fruits":
+                          Get.toNamed("/Fruits");
+                          break;
+
+                        case "alphabets":
+                          Get.toNamed("/Alphabets");
+                          break;
+
+                        case "vegetables":
+                          Get.toNamed("/Vegitable");
+                          break;
+
+                        default:
+                          Get.to(() => const OtherCourses());
+                      }
+                    },
+                  ),
                 );
               },
             );
@@ -166,7 +213,6 @@ class AllCategories extends StatelessWidget {
     );
   }
 }
-
 
 // -----------------------------------------------------------
 // 🎨 HEX → COLOR Converter

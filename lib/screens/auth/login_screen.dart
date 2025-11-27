@@ -14,12 +14,9 @@ class LoginScreen extends StatelessWidget {
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Color(0xff4b8dfc),
-              Color(0xff6fa3ff),
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
+            colors: [Color(0xff8360c3), Color(0xff2ebf91)],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
           ),
         ),
         child: Center(
@@ -44,7 +41,7 @@ class LoginScreen extends StatelessWidget {
                             .headlineMedium
                             ?.copyWith(fontWeight: FontWeight.bold),
                       ),
-                      const SizedBox(height: 6),
+                      SizedBox(height: 6),
                       Text("Login to continue"),
                       const SizedBox(height: 30),
 
@@ -89,11 +86,11 @@ class LoginScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12),
                         ),
                       ),
-                          child: const Text("Login", style: TextStyle(fontSize: 16)),
+                          child: Text("Login", style: TextStyle(fontSize: 16)),
                         ),
                       ),
 
-                      const SizedBox(height: 20),
+                       SizedBox(height: 20),
 
                       Center(
                         child: TextButton(

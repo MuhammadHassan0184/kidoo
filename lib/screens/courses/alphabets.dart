@@ -2,28 +2,55 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:kidoo/Config/utils/app_colors.dart';
 import 'package:kidoo/Widgets/banner_card.dart';
-import 'package:kidoo/Widgets/home_card.dart';
 
-class Alphabets extends StatelessWidget {
+class Alphabets extends StatefulWidget {
   const Alphabets({super.key});
+
+  @override
+  State<Alphabets> createState() => _AlphabetsState();
+}
+
+class _AlphabetsState extends State<Alphabets> {
+  String selectedAlphabet = "";
+  Color selectedColor = AppColors.green;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: AppColors.bgColor,
       backgroundColor: AppColors.black,
       appBar: AppBar(
-      backgroundColor: AppColors.bgColor,
-      leading: IconButton(onPressed: (){Get.offNamed("/AllCategories");}, icon: Icon(Icons.arrow_back, color: AppColors.twhite,),),
-        title: Text("Alphabets", style: TextStyle(color: AppColors.twhite, fontWeight: FontWeight.bold,), ), centerTitle: true,
+        backgroundColor: AppColors.bgColor,
+        leading: IconButton(
+          onPressed: () {
+            Get.offNamed("/AllCategories");
+          },
+          icon: Icon(Icons.arrow_back, color: AppColors.twhite),
+        ),
+        title: Text(
+          "Alphabets",
+          style: TextStyle(
+            color: AppColors.twhite,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
       ),
+
       body: Padding(
         padding: const EdgeInsets.all(15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BannerCard(label: "Alphabets",),
+
+            // 🔴 BANNER WITH SELECTED ALPHABET
+            BannerCard(
+              label: "Alphabets",
+              selectedText: selectedAlphabet,
+              selectedColor: selectedColor,
+            ),
+
             const SizedBox(height: 20),
+
             Expanded(
               child: GridView(
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -32,33 +59,34 @@ class Alphabets extends StatelessWidget {
                   crossAxisSpacing: 16,
                   childAspectRatio: 1,
                 ),
+
                 children: [
-                  HomeCard(label: "A", color: AppColors.red),
-            HomeCard(label: "B", color: AppColors.yellow),
-            HomeCard(label: "C", color: AppColors.green),
-            HomeCard(label: "D", color: AppColors.orange),
-            HomeCard(label: "E", color: AppColors.blue),
-            HomeCard(label: "F", color: AppColors.violet),
-            HomeCard(label: "G", color: AppColors.pink),
-            HomeCard(label: "H", color: AppColors.skin),
-            HomeCard(label: "I", color: AppColors.yellow),
-            HomeCard(label: "J", color: AppColors.green),
-            HomeCard(label: "K", color: AppColors.orange),
-            HomeCard(label: "L", color: AppColors.blue),
-            HomeCard(label: "M", color: AppColors.violet),
-            HomeCard(label: "N", color: AppColors.pink),
-            HomeCard(label: "o", color: AppColors.skin),
-            HomeCard(label: "P", color: AppColors.blue),
-            HomeCard(label: "Q", color: AppColors.green),
-            HomeCard(label: "R", color: AppColors.orange),
-            HomeCard(label: "S", color: AppColors.pink),
-            HomeCard(label: "T", color: AppColors.skin),
-            HomeCard(label: "U", color: AppColors.red),
-            HomeCard(label: "V", color: AppColors.yellow),
-            HomeCard(label: "W", color: AppColors.blue),
-            HomeCard(label: "X", color: AppColors.green),
-            HomeCard(label: "Y", color: AppColors.orange),
-            HomeCard(label: "Z", color: AppColors.violet),
+                  alphabetItem("A", AppColors.red),
+                  alphabetItem("B", AppColors.yellow),
+                  alphabetItem("C", AppColors.green),
+                  alphabetItem("D", AppColors.orange),
+                  alphabetItem("E", AppColors.blue),
+                  alphabetItem("F", AppColors.violet),
+                  alphabetItem("G", AppColors.pink),
+                  alphabetItem("H", AppColors.skin),
+                  alphabetItem("I", AppColors.yellow),
+                  alphabetItem("J", AppColors.green),
+                  alphabetItem("K", AppColors.orange),
+                  alphabetItem("L", AppColors.blue),
+                  alphabetItem("M", AppColors.violet),
+                  alphabetItem("N", AppColors.pink),
+                  alphabetItem("O", AppColors.skin),
+                  alphabetItem("P", AppColors.blue),
+                  alphabetItem("Q", AppColors.green),
+                  alphabetItem("R", AppColors.orange),
+                  alphabetItem("S", AppColors.pink),
+                  alphabetItem("T", AppColors.skin),
+                  alphabetItem("U", AppColors.red),
+                  alphabetItem("V", AppColors.yellow),
+                  alphabetItem("W", AppColors.blue),
+                  alphabetItem("X", AppColors.green),
+                  alphabetItem("Y", AppColors.orange),
+                  alphabetItem("Z", AppColors.violet),
                 ],
               ),
             ),
@@ -67,5 +95,18 @@ class Alphabets extends StatelessWidget {
       ),
     );
   }
+
+  // 🔵 FUNCTION TO ADD ONTAP EASILY
+  Widget alphabetItem(String letter, Color color) {
+    return HomeCard(
+      label: letter,
+      color: color,
+      onTap: () {
+        setState(() {
+          selectedAlphabet = letter;
+          selectedColor = color;
+        });
+      },
+    );
+  }
 }
-            

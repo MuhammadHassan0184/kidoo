@@ -4,54 +4,61 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class HomeCardimg extends StatelessWidget {
-  String label;
-  Color color;
-  String? img;
-  VoidCallback? onPressed;
-   HomeCardimg({super.key,
-   required this.label,
-   required this.color,
-    this.img,
-    this.onPressed,
-   });
+  final String label;
+  final Color color;
+  final String img;
+  final VoidCallback? onTap;
+
+  const HomeCardimg({
+    super.key,
+    required this.label,
+    required this.color,
+    required this.img,
+    this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onPressed,
+      onTap: onTap, // 🔥 working tap
+      borderRadius: BorderRadius.circular(25),
       child: Container(
-              width: 200,
-              height: 200,
-              decoration: BoxDecoration(
-                color: color,
-                borderRadius: BorderRadius.circular(10)
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 85,
-                    height: 85,
-                    clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      color: Colors.black
-                    ),
-                    child: 
-                    img != null
-                  ? Image.asset( img!, fit: BoxFit.cover,) : const Icon(
-                      Icons.image_not_supported,
-                      color: Colors.white,
-                      size: 40,
-                    ),
-                  ),
-                  SizedBox(height: 10,),
-                Text(label, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25, color: AppColors.twhite),),
-              ],),
+        decoration: BoxDecoration(
+          color: color, // 🔵 background color of the circle container
+          borderRadius: BorderRadius.circular(25),
+        ),
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // 🔴 Image in Circle
+            CircleAvatar(
+              radius: 45,
+              backgroundColor: Colors.white,
+              backgroundImage: AssetImage(img),
             ),
+
+            const SizedBox(height: 10),
+
+            // 🍎 Fruit name
+            Text(
+              label,
+              style: TextStyle(
+                color: AppColors.twhite,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
+
+
+
 
 // ignore: must_be_immutable
 // ignore: must_be_immutable

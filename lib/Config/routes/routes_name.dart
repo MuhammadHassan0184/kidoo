@@ -13,6 +13,6 @@ class AppRoutesName {
   static const String alphabets= "/Alphabets";
   static const String fruits= "/Fruits";
   static const String vegitable= "/Vegitable";
+  static const String otherCourses= "/OtherCourses";
 
- 
 }

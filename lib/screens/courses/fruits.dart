@@ -1,30 +1,57 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:kidoo/Config/utils/app_colors.dart';
 import 'package:kidoo/Widgets/banner_card.dart';
 import 'package:kidoo/Widgets/home_card.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-
-class Fruits extends StatelessWidget {
+class Fruits extends StatefulWidget {
   const Fruits({super.key});
+
+  @override
+  State<Fruits> createState() => _FruitsState();
+}
+
+class _FruitsState extends State<Fruits> {
+  String selectedFruit = "";
+  Color selectedColor = AppColors.green;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: AppColors.bgColor,
       backgroundColor: AppColors.black,
       appBar: AppBar(
-      backgroundColor: AppColors.bgColor,
-      leading: IconButton(onPressed: (){Get.offNamed("/AllCategories");}, icon: Icon(Icons.arrow_back, color: AppColors.twhite,),),
-        title: Text("Fruits", style: TextStyle(color: AppColors.twhite, fontWeight: FontWeight.bold,), ), centerTitle: true,
+        backgroundColor: AppColors.bgColor,
+        leading: IconButton(
+          onPressed: () {
+            Get.offNamed("/AllCategories");
+          },
+          icon: Icon(Icons.arrow_back, color: AppColors.twhite),
+        ),
+        title: Text(
+          "Fruits",
+          style: TextStyle(
+            color: AppColors.twhite,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        centerTitle: true,
       ),
+
       body: Padding(
         padding: const EdgeInsets.all(15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BannerCard(label: "Fruits Names",),
+
+            /// 🔵 Top Banner Showing Selected Fruit
+            BannerCard(
+              label: "Fruits Names",
+              selectedText: selectedFruit,
+              selectedColor: selectedColor,
+            ),
+
             const SizedBox(height: 20),
+
             Expanded(
               child: GridView(
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -34,31 +61,45 @@ class Fruits extends StatelessWidget {
                   childAspectRatio: 1,
                 ),
                 children: [
-            HomeCardimg(label: "Apple", color: AppColors.red, img: "assets/apple.jpg",),
-            HomeCardimg(label: "Mango", color: AppColors.yellow, img: "assets/mango.jpg",),
-            HomeCardimg(label: "Banana", color: AppColors.yellow, img: "assets/banana.jpg",),
-            HomeCardimg(label: "Peach", color: AppColors.orange, img: "assets/peach.jpg",),
-            HomeCardimg(label: "Strawberry", color: AppColors.red, img: "assets/strawberries.jpg",),
-            HomeCardimg(label: "pineapple", color: AppColors.yellow, img: "assets/pineapple.jpg",),
-            HomeCardimg(label: "Orange", color: AppColors.orange, img: "assets/orange.jpg",),
-            HomeCardimg(label: "Blue Berry", color: AppColors.blue, img: "assets/bluebery.jpg",),
-            HomeCardimg(label: "Grapes", color: AppColors.fruits, img: "assets/grapes.jpg",),
-            HomeCardimg(label: "Cherry", color: AppColors.red, img: "assets/cherry.jpg",),
-            HomeCardimg(label: "Black Berry", color: AppColors.blue, img: "assets/blackberry.jpg",),
-            HomeCardimg(label: "Guava", color: AppColors.green, img: "assets/guava.jpg",),
-            HomeCardimg(label: "Dragon Fruit", color: AppColors.red, img: "assets/dragonfruit.jpg",),
-            HomeCardimg(label: "Dates", color: AppColors.orange, img: "assets/dates.jpg",),
-            HomeCardimg(label: "Grape Fruit", color: AppColors.orange, img: "assets/grapefruit.jpg",),
-            HomeCardimg(label: "Kiwi", color: AppColors.green, img: "assets/kiwi.jpg",),
-            HomeCardimg(label: "Lychee", color: AppColors.red, img: "assets/lychee.jpg",),
-            HomeCardimg(label: "Pomegranate", color: AppColors.orange, img: "assets/Pomegranate.jpg",),
-                  
+                  fruitItem("Apple", AppColors.red, "assets/apple.jpg"),
+                  fruitItem("Mango", AppColors.yellow, "assets/mango.jpg"),
+                  fruitItem("Banana", AppColors.yellow, "assets/banana.jpg"),
+                  fruitItem("Peach", AppColors.orange, "assets/peach.jpg"),
+                  fruitItem("Strawberry", AppColors.red, "assets/strawberries.jpg"),
+                  fruitItem("Pineapple", AppColors.yellow, "assets/pineapple.jpg"),
+                  fruitItem("Orange", AppColors.orange, "assets/orange.jpg"),
+                  fruitItem("Blue Berry", AppColors.blue, "assets/bluebery.jpg"),
+                  fruitItem("Grapes", AppColors.fruits, "assets/grapes.jpg"),
+                  fruitItem("Cherry", AppColors.red, "assets/cherry.jpg"),
+                  fruitItem("Black Berry", AppColors.blue, "assets/blackberry.jpg"),
+                  fruitItem("Guava", AppColors.green, "assets/guava.jpg"),
+                  fruitItem("Dragon Fruit", AppColors.red, "assets/dragonfruit.jpg"),
+                  fruitItem("Dates", AppColors.orange, "assets/dates.jpg"),
+                  fruitItem("Grape Fruit", AppColors.orange, "assets/grapefruit.jpg"),
+                  fruitItem("Kiwi", AppColors.green, "assets/kiwi.jpg"),
+                  fruitItem("Lychee", AppColors.red, "assets/lychee.jpg"),
+                  fruitItem("Pomegranate", AppColors.orange, "assets/Pomegranate.jpg"),
                 ],
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  /// 🔥 FUNCTION to create a fruit card with onTap
+  Widget fruitItem(String name, Color color, String imgPath) {
+    return HomeCardimg(
+      label: name,
+      color: color,
+      img: imgPath,
+      onTap: () {
+        setState(() {
+          selectedFruit = name;
+          // selectedColor = color;
+        });
+      },
     );
   }
 }

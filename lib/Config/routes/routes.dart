@@ -1,4 +1,5 @@
 import 'package:kidoo/screens/menu/add_course_letter.dart';
+import 'package:kidoo/screens/courses/other_courses.dart';
 import 'package:kidoo/screens/kidoo/all_categories.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:kidoo/screens/auth/signup_screen.dart';
@@ -29,5 +30,6 @@ class AppRoutes {
     GetPage(name: AppRoutesName.alphabets, page: () => const Alphabets()),
     GetPage(name: AppRoutesName.fruits, page: () => const Fruits()),
     GetPage(name: AppRoutesName.vegitable, page: () => const Vegitable()),
+    GetPage(name: AppRoutesName.otherCourses, page: () => const OtherCourses()),
   ];
 }

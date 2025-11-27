@@ -1,29 +1,50 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:kidoo/Config/utils/app_colors.dart';
 import 'package:kidoo/Widgets/banner_card.dart';
 import 'package:kidoo/Widgets/home_card.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class Vegitable extends StatelessWidget {
+class Vegitable extends StatefulWidget {
   const Vegitable({super.key});
+
+  @override
+  State<Vegitable> createState() => _VegitableState();
+}
+
+class _VegitableState extends State<Vegitable> {
+  String selectedVeg = ""; // 🔵 show in circle
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: AppColors.bgColor,
       backgroundColor: AppColors.black,
       appBar: AppBar(
-      backgroundColor: AppColors.bgColor,
-      leading: IconButton(onPressed: (){Get.offNamed("/AllCategories");}, icon: Icon(Icons.arrow_back, color: AppColors.twhite,),),
-        title: Text("Vegitables", style: TextStyle(color: AppColors.twhite, fontWeight: FontWeight.bold,), ), centerTitle: true,
+        backgroundColor: AppColors.bgColor,
+        leading: IconButton(
+          onPressed: () => Get.offNamed("/AllCategories"),
+          icon: Icon(Icons.arrow_back, color: AppColors.twhite),
+        ),
+        title: Text(
+          "Vegetables",
+          style: TextStyle(color: AppColors.twhite, fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
       ),
+
       body: Padding(
         padding: const EdgeInsets.all(15),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            BannerCard(label: "Vegitable Names",),
+
+            /// ⭐ TOP BANNER — SHOW SELECTED VEGETABLE NAME
+            BannerCard(
+              label: "Vegetable Names",
+              selectedText: selectedVeg,
+            ),
+
             const SizedBox(height: 20),
+
             Expanded(
               child: GridView(
                 gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -33,28 +54,42 @@ class Vegitable extends StatelessWidget {
                   childAspectRatio: 1,
                 ),
                 children: [
-            HomeCardimg(label: "Potato", color: AppColors.orange, img: "assets/potato.jpg",),
-            HomeCardimg(label: "Carrot", color: AppColors.red, img: "assets/carrot.jpg",),
-            HomeCardimg(label: "Cucumber", color: AppColors.green, img: "assets/cucumber.jpg",),
-            HomeCardimg(label: "Onion", color: AppColors.orange, img: "assets/onion.jpg",),
-            HomeCardimg(label: "Ginger", color: AppColors.orange, img: "assets/ginger.jpg",),
-            HomeCardimg(label: "Tomato", color: AppColors.red, img: "assets/tomato.jpg",),
-            HomeCardimg(label: "Garlic", color: AppColors.yellow, img: "assets/garlic.jpg",),
-            HomeCardimg(label: "Pumpkin", color: AppColors.orange, img: "assets/pumpkin.jpg",),
-            HomeCardimg(label: "Capsicum", color: AppColors.red, img: "assets/capsicum.jpg",),
-            HomeCardimg(label: "Turnip", color: AppColors.yellow, img: "assets/turnip.jpg",),
-            HomeCardimg(label: "Mushroom", color: AppColors.orange, img: "assets/mushrooms.jpg",),
-            HomeCardimg(label: "Lady's finger", color: AppColors.green, img: "assets/ladyfinger.jpg",),
-            HomeCardimg(label: "Green papaya", color: AppColors.fruits, img: "assets/papaya.jpg",),
-            HomeCardimg(label: "Sweet potato", color: AppColors.red, img: "assets/sweet-potato.png",),
-            HomeCardimg(label: "Beetroot", color: AppColors.red, img: "assets/beetroot.jpg",),
-            HomeCardimg(label: "Radish ", color: AppColors.orange, img: "assets/radishmuli.jpg",),
+                  vegItem("Potato", AppColors.orange, "assets/potato.jpg"),
+                  vegItem("Carrot", AppColors.red, "assets/carrot.jpg"),
+                  vegItem("Cucumber", AppColors.green, "assets/cucumber.jpg"),
+                  vegItem("Onion", AppColors.orange, "assets/onion.jpg"),
+                  vegItem("Ginger", AppColors.orange, "assets/ginger.jpg"),
+                  vegItem("Tomato", AppColors.red, "assets/tomato.jpg"),
+                  vegItem("Garlic", AppColors.yellow, "assets/garlic.jpg"),
+                  vegItem("Pumpkin", AppColors.orange, "assets/pumpkin.jpg"),
+                  vegItem("Capsicum", AppColors.red, "assets/capsicum.jpg"),
+                  vegItem("Turnip", AppColors.yellow, "assets/turnip.jpg"),
+                  vegItem("Mushroom", AppColors.orange, "assets/mushrooms.jpg"),
+                  vegItem("Lady's finger", AppColors.green, "assets/ladyfinger.jpg"),
+                  vegItem("Green papaya", AppColors.fruits, "assets/papaya.jpg"),
+                  vegItem("Sweet potato", AppColors.red, "assets/sweet-potato.png"),
+                  vegItem("Beetroot", AppColors.red, "assets/beetroot.jpg"),
+                  vegItem("Radish", AppColors.orange, "assets/radishmuli.jpg"),
                 ],
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  /// ⭐ SINGLE VEGETABLE CARD WITH onTap
+  Widget vegItem(String name, Color color, String imgPath) {
+    return HomeCardimg(
+      label: name,
+      color: color,
+      img: imgPath,
+      onTap: () {
+        setState(() {
+          selectedVeg = name; // ✔ Now top banner updates
+        });
+      },
     );
   }
 }
