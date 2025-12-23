@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use, use_build_context_synchronously, unnecessary_import
-
+import 'package:kidoo/Widgets/pickers/picker_controllers/color_picker_controller.dart';
+import 'package:kidoo/Widgets/pickers/input_%20picker.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:kidoo/Config/routes/routes_name.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -85,7 +86,14 @@ class AddLessonNone extends StatefulWidget {
 
 class _AddLessonNoneState extends State<AddLessonNone> {
   final titleController = TextEditingController();
-  final themeController = TextEditingController();
+  // final themeController = TextEditingController();
+  final colorsCtrl = ColorPickerController();
+  void initState() {
+    super.initState();
+    colorsCtrl.bindRefresh(() => setState(() {}));
+  }
+
+  void refresh() => setState(() {});
 
   String? selectedCourse;
 
@@ -93,9 +101,9 @@ class _AddLessonNoneState extends State<AddLessonNone> {
   final List<String> courses = [
     "colors",
     "alphabets",
-    "fruits",
-    "vegetables",
     "otherCourses",
+    "vegetables",
+    "fruits",
   ];
 
   // ✔ Updated screen routes
@@ -103,16 +111,16 @@ class _AddLessonNoneState extends State<AddLessonNone> {
 final Map<String, String> courseRoutes = {
   "colors": AppRoutesName.colortask,
   "alphabets": AppRoutesName.alphabets,
-  "fruits": AppRoutesName.fruits,
-  "vegetables": AppRoutesName.vegitable,
   "otherCourses": AppRoutesName.otherCourses,
+  "vegetables": AppRoutesName.vegitable,
+  "fruits": AppRoutesName.fruits,
 };
 
 
   Future<void> addLesson() async {
     if (selectedCourse == null ||
         titleController.text.trim().isEmpty ||
-        themeController.text.trim().isEmpty) {
+        colorsCtrl.colorCtrl.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text("Please fill all fields")),
       );
@@ -126,7 +134,7 @@ final Map<String, String> courseRoutes = {
           .collection("lessons")
           .add({
         "title": titleController.text.trim(),
-        "theme": themeController.text.trim(),
+        "theme": colorsCtrl.colorCtrl.text.trim(),
         "createdAt": DateTime.now(),
       });
 
@@ -138,10 +146,10 @@ final Map<String, String> courseRoutes = {
 
       // Clear fields
       titleController.clear();
-      themeController.clear();
+      colorsCtrl.colorCtrl.clear();
 
       // ======================================================
-      // 🚀 NAVIGATE TO THE SCREEN SELECTED IN DROPDOWN
+      // NAVIGATE TO THE SCREEN SELECTED IN DROPDOWN
       // ======================================================
       String? route = courseRoutes[selectedCourse];
 
@@ -210,26 +218,19 @@ final Map<String, String> courseRoutes = {
                     fontSize: 18,
                     fontWeight: FontWeight.w600)),
             SizedBox(height: 10),
-
-            TextField(
-              controller: themeController,
-              style: TextStyle(color: AppColors.twhite),
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: AppColors.bgColor,
-                hintText: "Enter Color (ex: #FF4500)",
-                hintStyle: TextStyle(color: AppColors.info),
-                contentPadding: const EdgeInsets.all(16),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: BorderSide(color: AppColors.primary),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(14),
-                  borderSide: BorderSide(color: AppColors.zink),
-                ),
+            PickerInput(
+            label: "Pick Color",
+            controller: colorsCtrl.colorCtrl,
+            onTap: () => colorsCtrl.pick(context, refresh),
+            suffix: Container(
+              width: 25,
+              height: 25,
+              decoration: BoxDecoration(
+                color: colorsCtrl.selectedColor,
+                shape: BoxShape.circle,
               ),
             ),
+          ),
 
             SizedBox(height: 25),
 

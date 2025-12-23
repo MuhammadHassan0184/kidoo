@@ -122,7 +122,8 @@ class MainManue extends StatelessWidget {
             if (width > 600) crossAxisCount = 3; 
             if (width > 900) crossAxisCount = 4; 
 
-            return GridView.builder(
+            return 
+            GridView.builder(
               padding: const EdgeInsets.symmetric(vertical: 16),
               shrinkWrap: true,
               itemCount: 6, 

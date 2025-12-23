@@ -37,7 +37,7 @@ class LessonList extends StatelessWidget {
               ),
             ),
       
-            const SizedBox(width: 10),
+            SizedBox(width: 10),
       
             // --------- Title + Subtitle ----------
             Expanded(
@@ -55,7 +55,7 @@ class LessonList extends StatelessWidget {
                     overflow: TextOverflow.ellipsis,
                   ),
       
-                  const SizedBox(height: 4),
+                 SizedBox(height: 4),
       
                   Text(
                     "Info",

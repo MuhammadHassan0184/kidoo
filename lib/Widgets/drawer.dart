@@ -1,6 +1,7 @@
 import 'package:kidoo/screens/auth/login_screen.dart';
 import 'package:kidoo/services/user_controller.dart';
 import 'package:kidoo/Config/utils/app_colors.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:kidoo/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -55,7 +56,7 @@ Future<void> _logout(BuildContext context) async {
         children: [
           DrawerHeader(
             decoration: BoxDecoration(color: AppColors.frozi),
-            child: const Text("Menu",
+            child:  Text(FirebaseAuth.instance.currentUser!.email??"No",
                 style: TextStyle(color: Colors.white, fontSize: 26)),
           ),
 

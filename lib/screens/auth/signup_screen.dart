@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:kidoo/controllers/signup_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,142 +12,218 @@ class SignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xff8360c3), Color(0xff2ebf91)],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+      backgroundColor: Color(0xff0B0B0B),
+      body: Stack(
+        children: [
+          // Background glow
+          Positioned(
+            top: -120,
+            left: -120,
+            child: Container(
+              height: 300,
+              width: 300,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Color(0xff2ebf91).withOpacity(0.25),
+              ),
+            ),
           ),
-        ),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(22.0),
-              child: Card(
-                elevation: 8,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 30,
-                    horizontal: 24,
+
+          Positioned(
+            bottom: -120,
+            right: -120,
+            child: Container(
+              height: 300,
+              width: 300,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Color(0xff8360c3).withOpacity(0.25),
+              ),
+            ),
+          ),
+
+          Center(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.all(24),
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Color(0xff141414),
+                    borderRadius: BorderRadius.circular(26),
+                    border: Border.all(
+                      color: Colors.white.withOpacity(0.06),
+                    ),
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Create Account ✨",
-                        style: Theme.of(context).textTheme.headlineMedium
-                            ?.copyWith(fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(height: 6),
-                      Text("Sign up to get started"),
-                      const SizedBox(height: 30),
-                      TextFormField(
-                        controller: controller.fullNameController,
-                        decoration: InputDecoration(
-                          labelText: 'Full Name',
-                          prefixIcon: const Icon(Icons.person),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 26, vertical: 34),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Sign Up",
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.w700,
+                            color: Colors.white,
+                            letterSpacing: 0.6,
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 18),
 
-                      TextFormField(
-                        controller: controller.countryController,
-                        decoration: InputDecoration(
-                          labelText: 'Country',
-                          prefixIcon: const Icon(Icons.flag),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 18),
-                      DropdownButtonFormField<String>(
-                        // ignore: deprecated_member_use
-                        value: controller.selectedRole,
-                        decoration: InputDecoration(
-                          labelText: "Select Role",
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                        items: const [
-                          DropdownMenuItem(value: "admin", child: Text("Admin"),),
-                          DropdownMenuItem(value: "user", child: Text("User")),
-                        ],
-                        onChanged: (value) {
-                          controller.selectedRole = value!;
-                        },
-                      ),
-                      const SizedBox(height: 18),
-                      TextFormField(
-                        controller: controller.emailController,
-                        decoration: InputDecoration(
-                          labelText: 'Email',
-                          prefixIcon: const Icon(Icons.email_rounded),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 18),
+                        SizedBox(height: 6),
 
-                      TextFormField(
-                        controller: controller.passwordController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                          labelText: 'Password',
-                          prefixIcon: const Icon(Icons.lock_rounded),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
+                        Text(
+                          "Create your account",
+                          style: TextStyle(
+                            color: Colors.grey.shade500,
+                            fontSize: 14,
                           ),
                         ),
-                      ),
-                      const SizedBox(height: 18),
 
-                      const SizedBox(height: 24),
+                        SizedBox(height: 32),
 
-                      // FIX: call signup()
-                      SizedBox(
-                        width: double.infinity,
-                        child: FilledButton(
-                          onPressed: () {
-                            controller.signup(context);
+                        _field(
+                          controller: controller.fullNameController,
+                          hint: "Full Name",
+                          icon: Icons.person_outline,
+                        ),
+
+                        SizedBox(height: 18),
+
+                        _field(
+                          controller: controller.countryController,
+                          hint: "Country",
+                          icon: Icons.public,
+                        ),
+
+                        SizedBox(height: 18),
+
+                        DropdownButtonFormField<String>(
+                          value: controller.selectedRole,
+                          dropdownColor: Color(0xff1C1C1C),
+                          decoration: _dropdownStyle("Role"),
+                          style: TextStyle(color: Colors.white),
+                          items: [
+                            DropdownMenuItem(
+                              value: "admin",
+                              child: Text("Admin", style: TextStyle(color: Colors.white)),
+                            ),
+                            DropdownMenuItem(
+                              value: "user",
+                              child: Text("User", style: TextStyle(color: Colors.white)),
+                            ),
+                          ],
+                          onChanged: (value) {
+                            controller.selectedRole = value!;
                           },
-                          style: FilledButton.styleFrom(
-                            padding: const EdgeInsets.symmetric(vertical: 16),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
+                        ),
+
+                        SizedBox(height: 18),
+
+                        _field(
+                          controller: controller.emailController,
+                          hint: "Email Address",
+                          icon: Icons.alternate_email,
+                        ),
+
+                        SizedBox(height: 18),
+
+                        _field(
+                          controller: controller.passwordController,
+                          hint: "Password",
+                          icon: Icons.lock_outline,
+                          obscure: true,
+                        ),
+
+                        SizedBox(height: 34),
+
+                        SizedBox(
+                          width: double.infinity,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              controller.signup(context);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              padding: EdgeInsets.symmetric(vertical: 18),
+                              backgroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(18),
+                              ),
+                            ),
+                            child: Text(
+                              "CREATE ACCOUNT",
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1.1,
+                              ),
                             ),
                           ),
-                          child: const Text(
-                            "Sign Up",
-                            style: TextStyle(fontSize: 16),
+                        ),
+
+                        SizedBox(height: 26),
+
+                        Center(
+                          child: GestureDetector(
+                            onTap: () => Get.toNamed("/LoginScreen"),
+                            child: Text(
+                              "Already have an account? Login",
+                              style: TextStyle(
+                                color: Colors.grey.shade500,
+                                fontSize: 13,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-
-                      const SizedBox(height: 20),
-
-                      Center(
-                        child: TextButton(
-                          onPressed: () => Get.toNamed("/LoginScreen"),
-                          child: const Text("Already have an account? Login"),
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  // ---------------- FIELD STYLE ----------------
+  Widget _field({
+    required TextEditingController controller,
+    required String hint,
+    required IconData icon,
+    bool obscure = false,
+  }) {
+    return TextFormField(
+      controller: controller,
+      obscureText: obscure,
+      style: TextStyle(color: Colors.white),
+      decoration: InputDecoration(
+        hintText: hint,
+        hintStyle: TextStyle(color: Colors.grey.shade600),
+        prefixIcon: Icon(icon, color: Colors.grey.shade600),
+        filled: true,
+        fillColor: Color(0xff1C1C1C),
+        contentPadding: EdgeInsets.symmetric(vertical: 18, horizontal: 14),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(18),
+          borderSide: BorderSide.none,
         ),
+      ),
+    );
+  }
+
+  // ---------------- DROPDOWN STYLE ----------------
+  InputDecoration _dropdownStyle(String hint) {
+    return InputDecoration(
+      hintText: hint,
+      hintStyle: TextStyle(color: Colors.grey.shade600),
+      filled: true,
+      fillColor: Color(0xff1C1C1C),
+      contentPadding: EdgeInsets.symmetric(horizontal: 14, vertical: 18),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(18),
+        borderSide: BorderSide.none,
       ),
     );
   }

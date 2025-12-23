@@ -17,7 +17,7 @@ void main() async {
     debugPrint("🔥 Firebase Init Error: $e");
   }
 
-  // ✅ Register UserController BEFORE using AuthGate
+  // Register UserController BEFORE using AuthGate
   Get.put(UserController(), permanent: true);
 
   runApp(const MyApp());

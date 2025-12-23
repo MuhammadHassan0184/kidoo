@@ -3,6 +3,8 @@ import 'package:kidoo/Config/utils/app_colors.dart';
 import 'package:kidoo/Widgets/app_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:kidoo/Widgets/pickers/input_%20picker.dart';
+import 'package:kidoo/Widgets/pickers/picker_controllers/color_picker_controller.dart';
 
 class AddCourses extends StatefulWidget {
   const AddCourses({super.key});
@@ -59,7 +61,7 @@ class _AddCoursesState extends State<AddCourses>
             child: TabBarView(
               controller: controller,
               children: [
-                AddCourseNone(),   // updated below
+                AddCourseNone(), // updated below
                 // AddCourseLetter(),
                 Container(
                   alignment: Alignment.center,
@@ -77,7 +79,7 @@ class _AddCoursesState extends State<AddCourses>
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
@@ -97,7 +99,16 @@ class AddCourseNone extends StatefulWidget {
 
 class _AddCourseNoneState extends State<AddCourseNone> {
   final TextEditingController titleController = TextEditingController();
-  final TextEditingController colorController = TextEditingController();
+  final colorCtrl = ColorPickerController();
+  // final TextEditingController colorController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    colorCtrl.bindRefresh(() => setState(() {}));
+  }
+
+  void refresh() => setState(() {});
 
   bool isLoading = false;
 
@@ -106,39 +117,42 @@ class _AddCourseNoneState extends State<AddCourseNone> {
 
     // ❌ allowedCourses condition removed
 
-    if (title.isEmpty || colorController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Please fill all fields")),
-      );
+    if (title.isEmpty || colorCtrl.colorCtrl.text.isEmpty) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Please fill all fields")));
       return;
     }
 
     setState(() => isLoading = true);
 
     try {
-      final docRef =
-          await FirebaseFirestore.instance.collection("courses").add({
-        "title": title,
-        "themeColor": colorController.text.trim(),
-        "createdAt": DateTime.now(),
-      });
+      final docRef = await FirebaseFirestore.instance.collection("courses").add(
+        {
+          "title": title,
+          // "themeColor": colorController.text.trim(),
+          "themeColor": colorCtrl.colorCtrl.text.trim(),
+          "createdAt": DateTime.now(),
+        },
+      );
 
       await docRef.update({"courseId": docRef.id});
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Course Added Successfully")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Course Added Successfully")));
 
       titleController.clear();
-      colorController.clear();
+      // colorController.clear();
+      colorCtrl.colorCtrl.clear();
 
       Future.delayed(Duration(milliseconds: 400), () {
         Get.offNamed("/AllCategories");
       });
-
     } catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text("Error: $e")));
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Error: $e")));
     }
 
     setState(() => isLoading = false);
@@ -153,9 +167,9 @@ class _AddCourseNoneState extends State<AddCourseNone> {
         children: [
           SizedBox(height: 20),
 
-          Text("Title",
-              style: TextStyle(color: AppColors.info, fontSize: 19)),
+          Text("Title", style: TextStyle(color: AppColors.info, fontSize: 19)),
           SizedBox(height: 10),
+
           AppTextField(
             label: "Enter Course Title",
             controller: titleController,
@@ -163,12 +177,23 @@ class _AddCourseNoneState extends State<AddCourseNone> {
 
           SizedBox(height: 20),
 
-          Text("Color Theme",
-              style: TextStyle(color: AppColors.info, fontSize: 19)),
+          Text(
+            "Color Theme",
+            style: TextStyle(color: AppColors.info, fontSize: 19),
+          ),
           SizedBox(height: 10),
-          AppTextField(
-            label: "Enter Color (ex: #FF4500)",
-            controller: colorController,
+          PickerInput(
+            label: "Pick Color",
+            controller: colorCtrl.colorCtrl,
+            onTap: () => colorCtrl.pick(context, refresh),
+            suffix: Container(
+              width: 25,
+              height: 25,
+              decoration: BoxDecoration(
+                color: colorCtrl.selectedColor,
+                shape: BoxShape.circle,
+              ),
+            ),
           ),
 
           SizedBox(height: 30),
@@ -180,7 +205,8 @@ class _AddCourseNoneState extends State<AddCourseNone> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.zink,
                 shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10)),
+                  borderRadius: BorderRadius.circular(10),
+                ),
               ),
               onPressed: isLoading ? null : addCourse,
               child: isLoading

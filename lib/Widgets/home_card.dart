@@ -61,7 +61,6 @@ class HomeCardimg extends StatelessWidget {
 
 
 // ignore: must_be_immutable
-// ignore: must_be_immutable
 
 class HomeCard extends StatelessWidget {
   final String label;
