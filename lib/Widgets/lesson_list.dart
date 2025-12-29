@@ -14,7 +14,7 @@ class LessonList extends StatelessWidget {
         
       },
       child: Container(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.all(4),
         decoration: BoxDecoration(
           color: AppColors.fgColor,
           borderRadius: BorderRadius.circular(10),

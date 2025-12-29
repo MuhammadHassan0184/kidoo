@@ -88,6 +88,10 @@ Future<void> _logout(BuildContext context) async {
               ),
             ),
           ],
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Divider(),
+          ),
           // ============================
           // LOGOUT — SHOW FOR ALL USERS
           // ============================

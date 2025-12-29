@@ -63,6 +63,7 @@
 // }
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:kidoo/Config/utils/app_colors.dart';
 
 class ColorPickerController {
   Color selectedColor = Colors.red;
@@ -118,7 +119,10 @@ class ColorPickerController {
           ),
         ),
         actions: [
-          TextButton(
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.frozi
+            ),
             onPressed: () {
               selectedColor = temp;
               colorCtrl.text =
@@ -126,7 +130,7 @@ class ColorPickerController {
               updateUI?.call();
               Navigator.pop(context);
             },
-            child: const Text("OK"),
+            child: Text("OK", style: TextStyle(color: AppColors.twhite),),
           )
         ],
       ),

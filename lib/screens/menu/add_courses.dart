@@ -42,19 +42,17 @@ class _AddCoursesState extends State<AddCourses>
 
       body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 50),
-            child: TabBar(
-              controller: controller,
-              labelColor: Colors.blue,
-              unselectedLabelColor: Colors.grey,
-              indicatorColor: Colors.blue,
-              tabs: const [
-                Tab(text: "none"),
-                Tab(text: "letter"),
-                Tab(text: "image"),
-              ],
-            ),
+          TabBar(
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            controller: controller,
+            labelColor: Colors.blue,
+            unselectedLabelColor: Colors.grey,
+            indicatorColor: Colors.blue,
+            tabs: const [
+              Tab(text: "none"),
+              Tab(text: "letter"),
+              Tab(text: "image"),
+            ],
           ),
 
           Expanded(
@@ -187,6 +185,7 @@ class _AddCourseNoneState extends State<AddCourseNone> {
             controller: colorCtrl.colorCtrl,
             onTap: () => colorCtrl.pick(context, refresh),
             suffix: Container(
+              margin: EdgeInsets.symmetric(horizontal: 5),
               width: 25,
               height: 25,
               decoration: BoxDecoration(

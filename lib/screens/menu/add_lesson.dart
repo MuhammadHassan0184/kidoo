@@ -38,17 +38,18 @@ class _AddLessonState extends State<AddLesson>
           onPressed: () => Get.offNamed("/MainManue"),
           icon: Icon(Icons.arrow_back, color: AppColors.twhite),
         ),
-        title: const Text(
+        title: Text(
           "Add Lesson",
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
         bottom: TabBar(
+          padding: EdgeInsets.symmetric(horizontal: 30),
           controller: controller,
           labelColor: Colors.blue,
           unselectedLabelColor: Colors.grey,
           indicatorColor: Colors.blue,
-          tabs: const [
+          tabs: [
             Tab(text: "None"),
             Tab(text: "Letter"),
             Tab(text: "Image"),
@@ -223,6 +224,7 @@ final Map<String, String> courseRoutes = {
             controller: colorsCtrl.colorCtrl,
             onTap: () => colorsCtrl.pick(context, refresh),
             suffix: Container(
+              margin: EdgeInsets.symmetric(horizontal: 5),
               width: 25,
               height: 25,
               decoration: BoxDecoration(

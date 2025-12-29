@@ -57,7 +57,10 @@ class MainManue extends StatelessWidget {
         ),
 
         actions: [
-          Image.asset("assets/kidlogo.png"),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: Image.asset("assets/kidlogo.png"),
+          ),
         ],
       ),
 
@@ -93,7 +96,7 @@ class MainManue extends StatelessWidget {
                     "Courses",
                     style: TextStyle(
                         color: AppColors.twhite,
-                        fontSize: 22,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold),
                   ),
                   Spacer(),
@@ -105,7 +108,7 @@ class MainManue extends StatelessWidget {
                       "See All",
                       style: TextStyle(
                           color: AppColors.frozi,
-                          fontSize: 20,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold),
                     ),
                   ),
@@ -149,7 +152,7 @@ class MainManue extends StatelessWidget {
                     "Video Stories",
                     style: TextStyle(
                         color: AppColors.twhite,
-                        fontSize: 22,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold),
                   ),
                   Spacer(),
@@ -161,7 +164,7 @@ class MainManue extends StatelessWidget {
                       "See All",
                       style: TextStyle(
                           color: AppColors.frozi,
-                          fontSize: 20,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold),
                     ),
                   ),
