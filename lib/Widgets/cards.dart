@@ -1,39 +1,44 @@
 import 'package:kidoo/Config/utils/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:kidoo/Widgets/custom_comming_soon.dart';
 
 // ignore: must_be_immutable
 class MainCard extends StatelessWidget {
   String? img;
-   MainCard({super.key, this.img});
+  MainCard({super.key, this.img});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        
+        showDialog(context: context, builder: (context) => CustomCommingSoon());
       },
       child: Container(
-              padding: EdgeInsets.all(10),
-              width: 170,
+        padding: EdgeInsets.all(10),
+        width: 170,
+        decoration: BoxDecoration(
+          color: AppColors.bgColor,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Column(
+          children: [
+            Container(
+              clipBehavior: Clip.antiAlias,
               decoration: BoxDecoration(
-                color: AppColors.bgColor,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Column(
-                children: [
-                  Container(
-                    clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: 
-                    img != null ? Image.asset( img!, fit: BoxFit.cover,) :  Image.asset("assets/imageicon.png", fit: BoxFit.fill,),
-                  ),
-                  SizedBox(height: 8,),
-                  Text("Book Title here jk jd..", style: TextStyle(color: AppColors.twhite, fontSize: 15),)
-                ],
-              ),
+              child: img != null
+                  ? Image.asset(img!, fit: BoxFit.cover)
+                  : Image.asset("assets/imageicon.png", fit: BoxFit.fill),
             ),
+            SizedBox(height: 8),
+            Text(
+              "Book Title here jk jd..",
+              style: TextStyle(color: AppColors.twhite, fontSize: 15),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -46,7 +51,9 @@ class PlayCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        showDialog(context: context, builder: (context) => CustomCommingSoon());
+      },
       child: Container(
         width: 160, // fixed width for horizontal scroll use
         padding: const EdgeInsets.all(10),
@@ -77,18 +84,22 @@ class PlayCard extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text("Book Title nk oijm n n n n nj nj",
-                      softWrap: true,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                          style: TextStyle(color: Colors.white, fontSize: 13)),
-                      Text("category",
-                      maxLines: 1,
-                          style: TextStyle(color: Colors.white, fontSize: 13)),
+                      Text(
+                        "Book Title nk oijm n n n n nj nj",
+                        softWrap: true,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: TextStyle(color: Colors.white, fontSize: 13),
+                      ),
+                      Text(
+                        "category",
+                        maxLines: 1,
+                        style: TextStyle(color: Colors.white, fontSize: 13),
+                      ),
                     ],
                   ),
                 ),
-                Icon(Icons.play_circle, color: AppColors.frozi ,size: 35,)
+                Icon(Icons.play_circle, color: AppColors.frozi, size: 35),
               ],
             ),
           ],
@@ -101,12 +112,14 @@ class PlayCard extends StatelessWidget {
 // ignore: must_be_immutable
 class PlayCardB extends StatelessWidget {
   String? img;
-   PlayCardB({super.key, this.img});
+  PlayCardB({super.key, this.img});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        showDialog(context: context, builder: (context) => CustomCommingSoon());
+      },
       child: Container(
         padding: const EdgeInsets.all(10),
         decoration: BoxDecoration(
@@ -114,7 +127,7 @@ class PlayCardB extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: Column(
-          mainAxisSize: MainAxisSize.min, 
+          mainAxisSize: MainAxisSize.min,
           children: [
             Container(
               width: double.infinity,
@@ -122,9 +135,9 @@ class PlayCardB extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: 
-              img != null ? Image.asset(img!, fit: BoxFit.cover): 
-                  Image.asset("assets/imageicon.png", fit: BoxFit.cover),
+              child: img != null
+                  ? Image.asset(img!, fit: BoxFit.cover)
+                  : Image.asset("assets/imageicon.png", fit: BoxFit.cover),
             ),
             const SizedBox(height: 7),
             Row(
@@ -135,18 +148,22 @@ class PlayCardB extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text("Book Title nk oijm n n n n nj nj",
-                      softWrap: true,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1,
-                          style: TextStyle(color: Colors.white, fontSize: 13)),
-                      Text("category",
-                      maxLines: 1,
-                          style: TextStyle(color: Colors.white, fontSize: 13)),
+                      Text(
+                        "Book Title nk oijm n n n n nj nj",
+                        softWrap: true,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1,
+                        style: TextStyle(color: Colors.white, fontSize: 13),
+                      ),
+                      Text(
+                        "category",
+                        maxLines: 1,
+                        style: TextStyle(color: Colors.white, fontSize: 13),
+                      ),
                     ],
                   ),
                 ),
-                Icon(Icons.play_circle, color: AppColors.frozi ,size: 35,)
+                Icon(Icons.play_circle, color: AppColors.frozi, size: 35),
               ],
             ),
           ],

@@ -106,18 +106,13 @@ class _AddLessonNoneState extends State<AddLessonNone> {
     "colors",
     "alphabets",
     "otherCourses",
-    "vegetables",
-    "fruits",
   ];
 
-  // ✔ Updated screen routes
   // ✔ Updated screen routes
   final Map<String, String> courseRoutes = {
     "colors": AppRoutesName.colortask,
     "alphabets": AppRoutesName.alphabets,
     "otherCourses": AppRoutesName.otherCourses,
-    "vegetables": AppRoutesName.vegitable,
-    "fruits": AppRoutesName.fruits,
   };
 
   Future<void> addLesson() async {
@@ -579,6 +574,9 @@ class _AddLessonImageState extends State<AddLessonImage> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.zink,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
                 onPressed: addLesson,
                 child: Text(

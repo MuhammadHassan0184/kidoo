@@ -66,20 +66,19 @@ class AllCategories extends StatelessWidget {
                 String hex = course["themeColor"];
 
                 return GestureDetector(
-
-// Inside GridView.builder -> GestureDetector
-onLongPress: () {
-  CourseActionSheet.show(
-    courseId: course.id,
-    currentTitle: course["title"],
-    onUpdated: () {
-      // Optional: refresh state if needed
-    },
-    onDeleted: () {
-      // Optional: refresh state if needed
-    },
-  );
-},
+                  // Inside GridView.builder -> GestureDetector
+                  onLongPress: () {
+                    CourseActionSheet.show(
+                      courseId: course.id,
+                      currentTitle: course["title"],
+                      onUpdated: () {
+                        // Optional: refresh state if needed
+                      },
+                      onDeleted: () {
+                        // Optional: refresh state if needed
+                      },
+                    );
+                  },
 
                   child: HomeCard(
                     label: title,
@@ -100,7 +99,8 @@ onLongPress: () {
                           break;
                         default:
                           Get.toNamed(
-                              "${AppRoutesName.otherCourses}?id=${course.id}&title=${course["title"]}");
+                            "${AppRoutesName.otherCourses}?id=${course.id}&title=${course["title"]}",
+                          );
                       }
                     },
                   ),

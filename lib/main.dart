@@ -32,7 +32,6 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "Kidoo App",
       theme: ThemeData(primarySwatch: Colors.blue),
-
       // AuthGate decides where to go
       // home: AuthGate(),
       getPages: AppRoutes.routes(),
