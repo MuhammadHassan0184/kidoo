@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 class CustomDrawer extends StatelessWidget {
   CustomDrawer({super.key});
 
-  final userController = Get.find<UserController>(); // ⬅ GET USER ROLE
+  final userController = Get.find<UserController>(); // USER ROLE
 
 Future<void> _logout(BuildContext context) async {
   final shouldLogout = await showDialog<bool>(
@@ -34,10 +34,10 @@ Future<void> _logout(BuildContext context) async {
   );
 
   if (shouldLogout == true) {
-    // 🔥 LOGOUT FROM FIREBASE
+    //  LOGOUT FROM FIREBASE
     await AuthService().logout();
 
-    // 🔥 Redirect — but GetX will handle automatically if using AuthGate
+    // Redirect — but GetX will handle automatically if using AuthGate
     if (context.mounted) {
       Navigator.pushAndRemoveUntil(
         context,
@@ -61,7 +61,7 @@ Future<void> _logout(BuildContext context) async {
           ),
 
           // ============================
-          // 🔥 SHOW ONLY WHEN ADMIN
+          //  SHOW ONLY WHEN ADMIN
           // ============================
 
           if (userController.role.value == "admin") ...[
@@ -98,7 +98,7 @@ Future<void> _logout(BuildContext context) async {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: ListTile(
-              title: const Text(
+              title: Text(
                 "Log Out",
                 style: TextStyle(
                     fontWeight: FontWeight.bold,

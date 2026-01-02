@@ -115,7 +115,7 @@ onLongPress: () {
 }
 
 // -----------------------------------------------------------
-// 🎨 HEX → COLOR Converter
+// HEX → COLOR Converter
 // -----------------------------------------------------------
 Color hexToColor(String code) {
   try {

@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
       title: "Kidoo App",
       theme: ThemeData(primarySwatch: Colors.blue),
 
-      /// 👇 AuthGate decides where to go
+      // AuthGate decides where to go
       // home: AuthGate(),
       getPages: AppRoutes.routes(),
       initialRoute: AppRoutesName.authgate,

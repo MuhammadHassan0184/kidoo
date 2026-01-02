@@ -1,7 +1,6 @@
 import 'package:kidoo/Config/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
-
 // ignore: must_be_immutable
 class HomeCardimg extends StatelessWidget {
   final String label;
@@ -20,18 +19,18 @@ class HomeCardimg extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap, // 🔥 working tap
+      onTap: onTap, //  working tap
       borderRadius: BorderRadius.circular(25),
       child: Container(
         decoration: BoxDecoration(
-          color: color, // 🔵 background color of the circle container
+          color: color, // background color of the circle container
           borderRadius: BorderRadius.circular(25),
         ),
         padding: const EdgeInsets.all(12),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // 🔴 Image in Circle
+            // Image in Circle
             CircleAvatar(
               radius: 45,
               backgroundColor: Colors.white,
@@ -40,7 +39,7 @@ class HomeCardimg extends StatelessWidget {
 
             const SizedBox(height: 10),
 
-            // 🍎 Fruit name
+            // Fruit name
             Text(
               label,
               style: TextStyle(

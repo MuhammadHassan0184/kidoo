@@ -24,7 +24,7 @@ class MainManue extends StatelessWidget {
 
       appBar: AppBar(
         backgroundColor: AppColors.bgColor,
-        // 🔥 Only change: proper leading icon to open drawer
+        // Only change: proper leading icon to open drawer
         leading: Builder(
           builder: (context) {
             return IconButton(

@@ -1,69 +1,8 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-
-// // flutter_colorpicker
-
-// class ColorPickerController {
-//   Color selectedColor = Colors.red;
-
-//   final TextEditingController colorCtrl = TextEditingController();
-
-//   void pick(BuildContext context, VoidCallback updateUI) async {
-//     Color tempColor = selectedColor;
-
-//     await showDialog(
-//       context: context,
-//       builder: (_) => AlertDialog(
-//         title: const Text("Select Color"),
-
-//         content: SizedBox(
-//           width: double.maxFinite,
-//           child: SingleChildScrollView(
-//             child: Column(
-//               mainAxisSize: MainAxisSize.min,
-//               children: [
-//                 // Color palette only
-//                 ColorPicker(
-//                   pickerColor: tempColor,
-//                   onColorChanged: (color) {
-//                     tempColor = color;
-//                     colorCtrl.text =
-//                         "#${color.value.toRadixString(16).substring(2).toUpperCase()}";
-//                     updateUI();
-//                   },
-//                   paletteType: PaletteType.hsv, // HSV grid
-//                   pickerAreaHeightPercent: 1, // Use full height
-//                   displayThumbColor: false, // hide thumb circle
-//                   enableAlpha: false, // no transparency
-//                   hexInputBar: true, // HEX input above palette
-//                   showLabel: false, // hide RGB/HSV text
-//                 ),
-//               ],
-//             ),
-//           ),
-//         ),
-
 // ignore_for_file: deprecated_member_use
 
-//         actions: [
-//           TextButton(
-//             onPressed: () {
-//               selectedColor = tempColor;
-//               colorCtrl.text =
-//                   "#${selectedColor.value.toRadixString(16).substring(2).toUpperCase()}";
-//               updateUI();
-//               Navigator.pop(context);
-//             },
-//             child: const Text("OK"),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:kidoo/Config/utils/app_colors.dart';
+import 'package:flutter/material.dart';
 
 class ColorPickerController {
   Color selectedColor = Colors.red;

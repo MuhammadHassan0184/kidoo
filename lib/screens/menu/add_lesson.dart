@@ -1,12 +1,16 @@
 // ignore_for_file: deprecated_member_use, use_build_context_synchronously, unnecessary_import
 import 'package:kidoo/Widgets/pickers/picker_controllers/color_picker_controller.dart';
+import 'package:kidoo/controllers/image_picker_controller.dart';
 import 'package:kidoo/Widgets/pickers/input_%20picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:kidoo/Config/routes/routes_name.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kidoo/Config/utils/app_colors.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'dart:io';
 
 // ==========================================================
 // MAIN ADD LESSON SCREEN (TAB LAYOUT)
@@ -62,13 +66,12 @@ class _AddLessonState extends State<AddLesson>
         children: [
           AddLessonNone(),
           Center(
-            child: Text("Letter Coming Soon",
-                style: TextStyle(color: Colors.white, fontSize: 18)),
+            child: Text(
+              "Letter Coming Soon",
+              style: TextStyle(color: Colors.white, fontSize: 18),
+            ),
           ),
-          Center(
-            child: Text("Image Coming Soon",
-                style: TextStyle(color: Colors.white, fontSize: 18)),
-          ),
+          AddLessonImage(),
         ],
       ),
     );
@@ -108,23 +111,22 @@ class _AddLessonNoneState extends State<AddLessonNone> {
   ];
 
   // ✔ Updated screen routes
- // ✔ Updated screen routes
-final Map<String, String> courseRoutes = {
-  "colors": AppRoutesName.colortask,
-  "alphabets": AppRoutesName.alphabets,
-  "otherCourses": AppRoutesName.otherCourses,
-  "vegetables": AppRoutesName.vegitable,
-  "fruits": AppRoutesName.fruits,
-};
-
+  // ✔ Updated screen routes
+  final Map<String, String> courseRoutes = {
+    "colors": AppRoutesName.colortask,
+    "alphabets": AppRoutesName.alphabets,
+    "otherCourses": AppRoutesName.otherCourses,
+    "vegetables": AppRoutesName.vegitable,
+    "fruits": AppRoutesName.fruits,
+  };
 
   Future<void> addLesson() async {
     if (selectedCourse == null ||
         titleController.text.trim().isEmpty ||
         colorsCtrl.colorCtrl.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Please fill all fields")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Please fill all fields")));
       return;
     }
 
@@ -134,16 +136,16 @@ final Map<String, String> courseRoutes = {
           .doc(selectedCourse)
           .collection("lessons")
           .add({
-        "title": titleController.text.trim(),
-        "theme": colorsCtrl.colorCtrl.text.trim(),
-        "createdAt": DateTime.now(),
-      });
+            "title": titleController.text.trim(),
+            "theme": colorsCtrl.colorCtrl.text.trim(),
+            "createdAt": DateTime.now(),
+          });
 
       await lessonRef.update({"lessonId": lessonRef.id});
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Lesson Added")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Lesson Added")));
 
       // Clear fields
       titleController.clear();
@@ -162,9 +164,9 @@ final Map<String, String> courseRoutes = {
         );
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Error: $e")),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Error: $e")));
     }
   }
 
@@ -179,15 +181,17 @@ final Map<String, String> courseRoutes = {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             SizedBox(height: 25),
 
             // TITLE FIELD
-            Text("Title",
-                style: TextStyle(
-                    color: AppColors.twhite,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600)),
+            Text(
+              "Title",
+              style: TextStyle(
+                color: AppColors.twhite,
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
             SizedBox(height: 10),
 
             TextField(
@@ -213,35 +217,41 @@ final Map<String, String> courseRoutes = {
             SizedBox(height: 25),
 
             // THEME FIELD
-            Text("Color Theme",
-                style: TextStyle(
-                    color: AppColors.twhite,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600)),
-            SizedBox(height: 10),
-            PickerInput(
-            label: "Pick Color",
-            controller: colorsCtrl.colorCtrl,
-            onTap: () => colorsCtrl.pick(context, refresh),
-            suffix: Container(
-              margin: EdgeInsets.symmetric(horizontal: 5),
-              width: 25,
-              height: 25,
-              decoration: BoxDecoration(
-                color: colorsCtrl.selectedColor,
-                shape: BoxShape.circle,
+            Text(
+              "Color Theme",
+              style: TextStyle(
+                color: AppColors.twhite,
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
               ),
             ),
-          ),
+            SizedBox(height: 10),
+            PickerInput(
+              label: "Pick Color",
+              controller: colorsCtrl.colorCtrl,
+              onTap: () => colorsCtrl.pick(context, refresh),
+              suffix: Container(
+                margin: EdgeInsets.symmetric(horizontal: 5),
+                width: 25,
+                height: 25,
+                decoration: BoxDecoration(
+                  color: colorsCtrl.selectedColor,
+                  shape: BoxShape.circle,
+                ),
+              ),
+            ),
 
             SizedBox(height: 25),
 
             // COURSE DROPDOWN
-            Text("Select Course",
-                style: TextStyle(
-                    color: AppColors.twhite,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600)),
+            Text(
+              "Select Course",
+              style: TextStyle(
+                color: AppColors.twhite,
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
             SizedBox(height: 10),
 
             Container(
@@ -259,8 +269,10 @@ final Map<String, String> courseRoutes = {
                 items: courses.map((course) {
                   return DropdownMenuItem(
                     value: course,
-                    child: Text(course,
-                        style: TextStyle(color: AppColors.twhite)),
+                    child: Text(
+                      course,
+                      style: TextStyle(color: AppColors.twhite),
+                    ),
                   );
                 }).toList(),
                 onChanged: (value) {
@@ -281,15 +293,17 @@ final Map<String, String> courseRoutes = {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.zink,
                   shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12)),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                 ),
                 onPressed: addLesson,
                 child: const Text(
                   "Add Lesson",
                   style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
+                    fontSize: 18,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
             ),
@@ -299,5 +313,308 @@ final Map<String, String> courseRoutes = {
         ),
       ),
     );
+  }
+}
+
+// ==========================================================
+// ADD LESSON (IMAGE)
+// ==========================================================
+class AddLessonImage extends StatefulWidget {
+  const AddLessonImage({super.key});
+
+  @override
+  State<AddLessonImage> createState() => _AddLessonImageState();
+}
+
+class _AddLessonImageState extends State<AddLessonImage> {
+  final titleController = TextEditingController();
+  final colorsCtrl = ColorPickerController();
+  final imageCtrl = ImagePickerController();
+
+  String? selectedCourse;
+
+  final List<String> courses = ["vegetables", "fruits"];
+
+  void initState() {
+    super.initState();
+    colorsCtrl.bindRefresh(() => setState(() {}));
+  }
+
+  void refresh() => setState(() {});
+
+  Future<String?> uploadImageToFirebase({
+    required ImagePickerController imageCtrl,
+    required String course,
+  }) async {
+    try {
+      final storageRef = FirebaseStorage.instance
+          .ref()
+          .child("lessons")
+          .child(course)
+          .child("${DateTime.now().millisecondsSinceEpoch}.jpg");
+
+      UploadTask uploadTask;
+
+      if (kIsWeb && imageCtrl.webImageBytes != null) {
+        print("Uploading Web image...");
+        uploadTask = storageRef.putData(
+          imageCtrl.webImageBytes!,
+          SettableMetadata(contentType: "image/jpeg"),
+        );
+      } else if (!kIsWeb && imageCtrl.imagePath != null) {
+        print("Uploading Mobile image from: ${imageCtrl.imagePath}");
+        uploadTask = storageRef.putFile(File(imageCtrl.imagePath!));
+      } else {
+        print("No image selected");
+        return null;
+      }
+
+      final snapshot = await uploadTask.whenComplete(() {});
+      final downloadUrl = await snapshot.ref.getDownloadURL();
+      print("Upload success: $downloadUrl");
+      return downloadUrl;
+    } catch (e) {
+      print("Image upload exception: $e");
+      return null;
+    }
+  }
+
+  Future<void> addLesson() async {
+    if (selectedCourse == null ||
+        titleController.text.trim().isEmpty ||
+        (imageCtrl.imagePath == null && imageCtrl.webImageBytes == null)) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Please fill all fields")));
+      return;
+    }
+
+    try {
+      // =========================
+      // UPLOAD IMAGE
+      // =========================
+      String? imageUrl = await uploadImageToFirebase(
+        imageCtrl: imageCtrl,
+        course: selectedCourse!,
+      );
+
+      if (imageUrl == null) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text("Image upload failed")));
+        return;
+      }
+
+      // =========================
+      // SAVE TO FIRESTORE
+      // =========================
+      final lessonRef = await FirebaseFirestore.instance
+          .collection("courses")
+          .doc(selectedCourse)
+          .collection("lessons")
+          .add({
+            "title": titleController.text.trim(),
+            "theme": colorsCtrl.colorCtrl.text.trim(),
+            "imageName": imageCtrl.imageCtrl.text,
+            "imageUrl": imageUrl,
+            "type": "image",
+            "createdAt": DateTime.now(),
+          });
+
+      await lessonRef.update({"lessonId": lessonRef.id});
+
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Image Lesson Added")));
+
+      // =========================
+      // CLEAR FIELDS
+      // =========================
+      titleController.clear();
+      colorsCtrl.colorCtrl.clear();
+      imageCtrl.clear();
+      setState(() {});
+
+      // =========================
+      // NAVIGATE TO SELECTED COURSE SCREEN
+      // =========================
+      final Map<String, String> courseRoutes = {
+        "vegetables": AppRoutesName.vegitable,
+        "fruits": AppRoutesName.fruits,
+      };
+
+      String? route = courseRoutes[selectedCourse];
+      if (route != null) {
+        Get.offNamed(route);
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Route not found for this course")),
+        );
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text("Error: $e")));
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: AppColors.black,
+      width: double.infinity,
+      height: double.infinity,
+      child: SingleChildScrollView(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 25),
+
+            // TITLE
+            Text(
+              "Title",
+              style: TextStyle(
+                color: AppColors.twhite,
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            SizedBox(height: 10),
+
+            TextField(
+              controller: titleController,
+              style: TextStyle(color: AppColors.twhite),
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: AppColors.bgColor,
+                hintText: "Enter Lesson Title",
+                hintStyle: TextStyle(color: AppColors.info),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide(color: AppColors.zink),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: BorderSide(color: AppColors.primary),
+                ),
+              ),
+            ),
+
+            SizedBox(height: 25),
+
+            // IMAGE PICKER
+            Text(
+              "Lesson Image",
+              style: TextStyle(
+                color: AppColors.twhite,
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            SizedBox(height: 10),
+
+            InkWell(
+              onTap: () async {
+                await imageCtrl.pick(context);
+                setState(() {});
+              },
+              child: Container(
+                height: 140,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: AppColors.bgColor,
+                  borderRadius: BorderRadius.circular(14),
+                  border: Border.all(color: AppColors.primary),
+                ),
+                child: _imagePreview(),
+              ),
+            ),
+
+            SizedBox(height: 25),
+
+            // COURSE
+            Text(
+              "Select Course",
+              style: TextStyle(
+                color: AppColors.twhite,
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            SizedBox(height: 10),
+
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 12),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(color: AppColors.primary),
+                color: AppColors.bgColor,
+              ),
+              child: DropdownButtonFormField(
+                value: selectedCourse,
+                dropdownColor: AppColors.bgColor,
+                decoration: InputDecoration(border: InputBorder.none),
+                items: courses.map((course) {
+                  return DropdownMenuItem(
+                    value: course,
+                    child: Text(
+                      course,
+                      style: TextStyle(color: AppColors.twhite),
+                    ),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() => selectedCourse = value);
+                },
+              ),
+            ),
+
+            SizedBox(height: 40),
+
+            // BUTTON
+            SizedBox(
+              width: double.infinity,
+              height: 55,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.zink,
+                ),
+                onPressed: addLesson,
+                child: Text(
+                  "Add Image Lesson",
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // =========================
+  // IMAGE PREVIEW (WEB + MOBILE)
+  // =========================
+  Widget _imagePreview() {
+    if (kIsWeb && imageCtrl.webImageBytes != null) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(14),
+        child: Image.memory(imageCtrl.webImageBytes!, fit: BoxFit.cover),
+      );
+    }
+
+    if (!kIsWeb && imageCtrl.imagePath != null) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(14),
+        child: Image.file(File(imageCtrl.imagePath!), fit: BoxFit.cover),
+      );
+    }
+
+    return Center(child: Icon(Icons.add_a_photo, color: Colors.grey, size: 40));
   }
 }

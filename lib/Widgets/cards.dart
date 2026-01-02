@@ -55,10 +55,10 @@ class PlayCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: Column(
-          mainAxisSize: MainAxisSize.min, // ✅ important for Row layout
+          mainAxisSize: MainAxisSize.min, // important for Row layout
           children: [
             Container(
-              height: 170, // ✅ fixed height works in both GridView & Row
+              height: 170, // fixed height works in both GridView & Row
               width: double.infinity,
               clipBehavior: Clip.antiAlias,
               decoration: BoxDecoration(
@@ -155,47 +155,3 @@ class PlayCardB extends StatelessWidget {
     );
   }
 }
-
-// InkWell(
-//       onTap: () {
-        
-//       },
-//       child: Container(
-//               padding: EdgeInsets.all(10),
-//               decoration: BoxDecoration(
-//                 color: AppColors.bgColor,
-//                 borderRadius: BorderRadius.circular(10),
-//               ),
-//               child: Column(
-//   children: [
-//     Expanded(
-//       child: Container(
-//         width: double.infinity,
-//         clipBehavior: Clip.antiAlias,
-//         decoration: BoxDecoration(
-//           borderRadius: BorderRadius.circular(10),
-//         ),
-//         child: img != null
-//             ? Image.asset(img!, fit: BoxFit.cover)
-//             : Image.asset("assets/imageicon.png", fit: BoxFit.cover),
-//       ),
-//     ),
-//     const SizedBox(height: 8),
-//     Row(
-//       children: [
-//         Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             Text("Book Title here jk jd", style: TextStyle(color: AppColors.twhite, fontSize: 13)),
-//             Text("category", style: TextStyle(color: AppColors.twhite, fontSize: 13)),
-//           ],
-//         ),
-//         const SizedBox(width: 7),
-//         Icon(Icons.play_circle, color: AppColors.frozi ,size: 35,)
-//       ],
-//     ),
-//   ],
-// ),
-
-//             ),
-//     );

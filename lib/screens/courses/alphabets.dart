@@ -79,7 +79,7 @@ class Alphabets extends StatelessWidget {
                       return GestureDetector(
                         onTap: () => controller.selectAlphabet(title, color),
                         onLongPress: () {
-                          // ✅ Using reusable bottom sheet
+                          // Using reusable bottom sheet
                           CourseActionSheet.show(
                             courseId: doc.id,
                             currentTitle: title,

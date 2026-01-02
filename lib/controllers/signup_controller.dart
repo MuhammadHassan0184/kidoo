@@ -50,7 +50,7 @@ class SignupController {
         // ignore: use_build_context_synchronously
         _showSnack(context, "Signup successful!");
 
-        // ⭐ SAVE ROLE HERE
+        //  SAVE ROLE HERE
         userController.role.value = selectedRole;
 
         Navigator.pushReplacement(

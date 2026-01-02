@@ -12,7 +12,7 @@ class Vegitable extends StatefulWidget {
 }
 
 class _VegitableState extends State<Vegitable> {
-  String selectedVeg = ""; // 🔵 show in circle
+  String selectedVeg = ""; // show in circle
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +37,7 @@ class _VegitableState extends State<Vegitable> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            /// ⭐ TOP BANNER — SHOW SELECTED VEGETABLE NAME
+            // TOP BANNER — SHOW SELECTED VEGETABLE NAME
             BannerCard(
               label: "Vegetable Names",
               selectedText: selectedVeg,
@@ -79,7 +79,7 @@ class _VegitableState extends State<Vegitable> {
     );
   }
 
-  /// ⭐ SINGLE VEGETABLE CARD WITH onTap
+  // SINGLE VEGETABLE CARD WITH onTap
   Widget vegItem(String name, Color color, String imgPath) {
     return HomeCardimg(
       label: name,

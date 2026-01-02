@@ -1,10 +1,10 @@
+import 'package:kidoo/Widgets/pickers/picker_controllers/color_picker_controller.dart';
+import 'package:kidoo/Widgets/pickers/input_%20picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:kidoo/Config/utils/app_colors.dart';
 import 'package:kidoo/Widgets/app_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:kidoo/Widgets/pickers/input_%20picker.dart';
-import 'package:kidoo/Widgets/pickers/picker_controllers/color_picker_controller.dart';
 
 class AddCourses extends StatefulWidget {
   const AddCourses({super.key});
@@ -113,7 +113,7 @@ class _AddCourseNoneState extends State<AddCourseNone> {
   Future<void> addCourse() async {
     String title = titleController.text.trim();
 
-    // ❌ allowedCourses condition removed
+    // allowedCourses condition removed
 
     if (title.isEmpty || colorCtrl.colorCtrl.text.isEmpty) {
       ScaffoldMessenger.of(

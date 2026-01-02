@@ -38,7 +38,7 @@ class Stories extends StatelessWidget {
         child: Column(
           children: [
             SizedBox(height: height * 0.02),
-            // ✅ Horizontal scroll section
+            // Horizontal scroll section
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(

@@ -43,7 +43,7 @@ class _FruitsState extends State<Fruits> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            /// 🔵 Top Banner Showing Selected Fruit
+            // Top Banner Showing Selected Fruit
             BannerCard(
               label: "Fruits Names",
               selectedText: selectedFruit,
@@ -88,7 +88,7 @@ class _FruitsState extends State<Fruits> {
     );
   }
 
-  /// 🔥 FUNCTION to create a fruit card with onTap
+  // FUNCTION to create a fruit card with onTap
   Widget fruitItem(String name, Color color, String imgPath) {
     return HomeCardimg(
       label: name,
