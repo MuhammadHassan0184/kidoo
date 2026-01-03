@@ -63,16 +63,7 @@ class _AddLessonState extends State<AddLesson>
 
       body: TabBarView(
         controller: controller,
-        children: [
-          AddLessonNone(),
-          Center(
-            child: Text(
-              "Letter Coming Soon",
-              style: TextStyle(color: Colors.white, fontSize: 18),
-            ),
-          ),
-          AddLessonImage(),
-        ],
+        children: [AddLessonNone(), AddLessonLetter(), AddLessonImage()],
       ),
     );
   }
@@ -102,11 +93,7 @@ class _AddLessonNoneState extends State<AddLessonNone> {
   String? selectedCourse;
 
   // ✔ Updated course names
-  final List<String> courses = [
-    "colors",
-    "alphabets",
-    "otherCourses",
-  ];
+  final List<String> courses = ["colors", "alphabets", "otherCourses"];
 
   // ✔ Updated screen routes
   final Map<String, String> courseRoutes = {
@@ -327,9 +314,9 @@ class _AddLessonImageState extends State<AddLessonImage> {
   final imageCtrl = ImagePickerController();
 
   String? selectedCourse;
-
   final List<String> courses = ["vegetables", "fruits"];
 
+  @override
   void initState() {
     super.initState();
     colorsCtrl.bindRefresh(() => setState(() {}));
@@ -351,25 +338,19 @@ class _AddLessonImageState extends State<AddLessonImage> {
       UploadTask uploadTask;
 
       if (kIsWeb && imageCtrl.webImageBytes != null) {
-        print("Uploading Web image...");
         uploadTask = storageRef.putData(
           imageCtrl.webImageBytes!,
           SettableMetadata(contentType: "image/jpeg"),
         );
       } else if (!kIsWeb && imageCtrl.imagePath != null) {
-        print("Uploading Mobile image from: ${imageCtrl.imagePath}");
         uploadTask = storageRef.putFile(File(imageCtrl.imagePath!));
       } else {
-        print("No image selected");
         return null;
       }
 
       final snapshot = await uploadTask.whenComplete(() {});
-      final downloadUrl = await snapshot.ref.getDownloadURL();
-      print("Upload success: $downloadUrl");
-      return downloadUrl;
+      return await snapshot.ref.getDownloadURL();
     } catch (e) {
-      print("Image upload exception: $e");
       return null;
     }
   }
@@ -385,9 +366,6 @@ class _AddLessonImageState extends State<AddLessonImage> {
     }
 
     try {
-      // =========================
-      // UPLOAD IMAGE
-      // =========================
       String? imageUrl = await uploadImageToFirebase(
         imageCtrl: imageCtrl,
         course: selectedCourse!,
@@ -400,9 +378,6 @@ class _AddLessonImageState extends State<AddLessonImage> {
         return;
       }
 
-      // =========================
-      // SAVE TO FIRESTORE
-      // =========================
       final lessonRef = await FirebaseFirestore.instance
           .collection("courses")
           .doc(selectedCourse)
@@ -422,17 +397,11 @@ class _AddLessonImageState extends State<AddLessonImage> {
         context,
       ).showSnackBar(SnackBar(content: Text("Image Lesson Added")));
 
-      // =========================
-      // CLEAR FIELDS
-      // =========================
       titleController.clear();
       colorsCtrl.colorCtrl.clear();
       imageCtrl.clear();
       setState(() {});
 
-      // =========================
-      // NAVIGATE TO SELECTED COURSE SCREEN
-      // =========================
       final Map<String, String> courseRoutes = {
         "vegetables": AppRoutesName.vegitable,
         "fruits": AppRoutesName.fruits,
@@ -441,10 +410,6 @@ class _AddLessonImageState extends State<AddLessonImage> {
       String? route = courseRoutes[selectedCourse];
       if (route != null) {
         Get.offNamed(route);
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Route not found for this course")),
-        );
       }
     } catch (e) {
       ScaffoldMessenger.of(
@@ -492,6 +457,34 @@ class _AddLessonImageState extends State<AddLessonImage> {
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(14),
                   borderSide: BorderSide(color: AppColors.primary),
+                ),
+              ),
+            ),
+
+            SizedBox(height: 25),
+
+            // 🎨 COLOR BAR (ADDED)
+            Text(
+              "Theme Color",
+              style: TextStyle(
+                color: AppColors.twhite,
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            SizedBox(height: 10),
+
+            PickerInput(
+              label: "Pick Color",
+              controller: colorsCtrl.colorCtrl,
+              onTap: () => colorsCtrl.pick(context, refresh),
+              suffix: Container(
+                margin: EdgeInsets.symmetric(horizontal: 6),
+                width: 24,
+                height: 24,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: colorsCtrl.selectedColor,
                 ),
               ),
             ),
@@ -596,7 +589,7 @@ class _AddLessonImageState extends State<AddLessonImage> {
   }
 
   // =========================
-  // IMAGE PREVIEW (WEB + MOBILE)
+  // IMAGE PREVIEW
   // =========================
   Widget _imagePreview() {
     if (kIsWeb && imageCtrl.webImageBytes != null) {
@@ -614,5 +607,259 @@ class _AddLessonImageState extends State<AddLessonImage> {
     }
 
     return Center(child: Icon(Icons.add_a_photo, color: Colors.grey, size: 40));
+  }
+}
+
+// ==========================================================
+// ADD LESSON (LETTER)
+// ==========================================================
+class AddLessonLetter extends StatefulWidget {
+  const AddLessonLetter({super.key});
+
+  @override
+  State<AddLessonLetter> createState() => _AddLessonLetterState();
+}
+
+class _AddLessonLetterState extends State<AddLessonLetter> {
+  final titleController = TextEditingController();
+  final letterController = TextEditingController(); // LETTER BAR
+  final colorsCtrl = ColorPickerController();
+
+  String? selectedCourse;
+
+  final List<String> courses = [
+    "colors",
+    "alphabets",
+    "vegetables",
+    "fruits",
+    "otherCourses",
+  ];
+
+  final Map<String, String> courseRoutes = {
+    "colors": AppRoutesName.colortask,
+    "alphabets": AppRoutesName.alphabets,
+    "vegetables": AppRoutesName.vegitable,
+    "fruits": AppRoutesName.fruits,
+    "otherCourses": AppRoutesName.otherCourses,
+  };
+
+  @override
+  void initState() {
+    super.initState();
+    colorsCtrl.bindRefresh(() => setState(() {}));
+  }
+
+  void refresh() => setState(() {});
+
+  Future<void> addLesson() async {
+    if (selectedCourse == null ||
+        titleController.text.trim().isEmpty ||
+        letterController.text.trim().isEmpty ||
+        colorsCtrl.colorCtrl.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please fill all fields")),
+      );
+      return;
+    }
+
+    try {
+      final lessonRef = await FirebaseFirestore.instance
+          .collection("courses")
+          .doc(selectedCourse)
+          .collection("lessons")
+          .add({
+        "title": titleController.text.trim(),
+        "letter": letterController.text.trim(),
+        "theme": colorsCtrl.colorCtrl.text.trim(),
+        "type": "letter",
+        "createdAt": DateTime.now(),
+      });
+
+      await lessonRef.update({"lessonId": lessonRef.id});
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Letter Lesson Added")),
+      );
+
+      titleController.clear();
+      letterController.clear();
+      colorsCtrl.colorCtrl.clear();
+      setState(() {});
+
+      // ✅ NAVIGATE TO SELECTED COURSE SCREEN
+      Get.offNamed(courseRoutes[selectedCourse]!);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error: $e")),
+      );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColors.black,
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 25),
+
+            // TITLE
+            Text(
+              "Title",
+              style: TextStyle(
+                color: AppColors.twhite,
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 10),
+
+            TextField(
+              controller: titleController,
+              style: TextStyle(color: AppColors.twhite),
+              decoration: _inputDecoration("Enter Lesson Title"),
+            ),
+
+            const SizedBox(height: 25),
+
+            // LETTER
+            Text(
+              "Letter",
+              style: TextStyle(
+                color: AppColors.twhite,
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 10),
+
+            TextField(
+              controller: letterController,
+              maxLength: 1,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: AppColors.twhite,
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+              ),
+              decoration: _inputDecoration("A"),
+            ),
+
+            const SizedBox(height: 20),
+
+            // COLOR
+            Text(
+              "Theme Color",
+              style: TextStyle(
+                color: AppColors.twhite,
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 10),
+
+            PickerInput(
+              label: "Pick Color",
+              controller: colorsCtrl.colorCtrl,
+              onTap: () => colorsCtrl.pick(context, refresh),
+              suffix: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 5),
+                width: 25,
+                height: 25,
+                decoration: BoxDecoration(
+                  color: colorsCtrl.selectedColor,
+                  shape: BoxShape.circle,
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 25),
+
+            // COURSE
+            Text(
+              "Select Course",
+              style: TextStyle(
+                color: AppColors.twhite,
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const SizedBox(height: 10),
+
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 12),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(color: AppColors.primary),
+                color: AppColors.bgColor,
+              ),
+              child: DropdownButtonFormField<String>(
+                value: selectedCourse,
+                dropdownColor: AppColors.bgColor,
+                decoration: const InputDecoration(border: InputBorder.none),
+                items: courses.map((course) {
+                  return DropdownMenuItem(
+                    value: course,
+                    child: Text(
+                      course,
+                      style: TextStyle(color: AppColors.twhite),
+                    ),
+                  );
+                }).toList(),
+                onChanged: (value) {
+                  setState(() => selectedCourse = value);
+                },
+              ),
+            ),
+
+            const SizedBox(height: 40),
+
+            // BUTTON
+            SizedBox(
+              width: double.infinity,
+              height: 55,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.zink,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                onPressed: addLesson,
+                child: const Text(
+                  "Add Letter Lesson",
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  static InputDecoration _inputDecoration(String hint) {
+    return InputDecoration(
+      filled: true,
+      fillColor: AppColors.bgColor,
+      hintText: hint,
+      hintStyle: TextStyle(color: AppColors.info),
+      counterText: "",
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(14),
+        borderSide: BorderSide(color: AppColors.primary),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(14),
+        borderSide: BorderSide(color: AppColors.zink),
+      ),
+    );
   }
 }

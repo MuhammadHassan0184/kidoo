@@ -100,3 +100,81 @@ class HomeCard extends StatelessWidget {
 }
 
 
+
+class LessonCard extends StatelessWidget {
+  final String label; // Lesson title
+  final String? letter; // Optional letter
+  final String? img; // Optional image url
+  final Color color;
+  final VoidCallback? onTap;
+
+  const LessonCard({
+    super.key,
+    required this.label,
+    required this.color,
+    this.letter,
+    this.img,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(25),
+      child: Container(
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(25),
+        ),
+        padding: const EdgeInsets.all(12),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // Show letter if exists, else show image if exists
+            if (letter != null && letter!.isNotEmpty)
+              CircleAvatar(
+                radius: 45,
+                backgroundColor: Colors.white,
+                child: Text(
+                  letter!,
+                  style: TextStyle(
+                    color: AppColors.twhite,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 36,
+                  ),
+                ),
+              )
+            else if (img != null && img!.isNotEmpty)
+              CircleAvatar(
+                radius: 45,
+                backgroundColor: Colors.white,
+                backgroundImage: NetworkImage(img!),
+              )
+            else
+              CircleAvatar(
+                radius: 45,
+                backgroundColor: Colors.white,
+                child: Icon(Icons.book, size: 36, color: AppColors.twhite),
+              ),
+
+            const SizedBox(height: 10),
+
+            Text(
+              label,
+              style: TextStyle(
+                color: AppColors.twhite,
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+
